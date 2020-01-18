@@ -1,0 +1,16 @@
+.container{
+    flex-direction:column;
+}
+
+.panel{
+
+    position: absolute;
+    top: 23%;
+    left: 10%;
+
+}
+
+.fade{
+
+    z-index: 100;
+}

@@ -1,0 +1,46 @@
+﻿
+div.school-space {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:300px;
+    margin: 3em 8em;
+    background-color:antiquewhite;
+    position:relative;
+    overflow:hidden;
+}
+
+.school-space > img {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%;
+    position: absolute;   
+    opacity: 0.4;
+}
+
+.school{
+   display:flex;
+   align-items:center;
+   justify-content:center;
+   flex-direction:column;
+   padding: 5px;
+   position:relative;
+   
+}
+
+.school > h2,h3{
+    margin:5px;
+    text-align:center;
+    
+}
+
+.school > .button{
+    margin-top: 3em;
+    width:16%;
+    min-width:90px;
+}
+@media (max-width:768px) {
+}
+
+@media(max-width:400px) {
+}

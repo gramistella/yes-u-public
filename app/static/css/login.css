@@ -1,0 +1,34 @@
+
+.login-panel{
+
+    margin:auto;
+    width:50%;
+    text-align:center;
+    position:relative;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    min-width:333px;
+}
+
+footer {
+    position: absolute;
+    display: block;
+    bottom: 0px;
+    width: 100%;
+}
+
+.panel-bg {
+    min-width:100%;
+    min-height:100%;
+    background-color: #154295;
+    opacity:0.4;
+    position:absolute;
+    top: 5px;
+    z-index: -1;
+}
+
+@media (max-width:768px) {
+    .login-panel{
+    top:100px;
+    }
+}

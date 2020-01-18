@@ -1,0 +1,179 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/navigation.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    
+    <title>Yes-U! - {{ home }}</title>
+</head>
+<body>
+    <h1 class="header" style="padding-top:0.5em;text-align:center">
+        <img src= "{{ url_for('static', filename='resources/erasmus-logo.png') }}" style="width:22%;min-width:180px">
+    </h1>
+    <div class="navigation">
+        <h1 class="mobile" style="padding-top:0.5em;text-align:center">
+            <img src= "{{ url_for('static', filename='resources/erasmus-logo.png') }}" style="width: 5%;min-width: 160px;top: -6px;position: absolute;margin-left: calc(50% - 35px);display: block;">
+            <img class="logo-img" src= "{{ url_for('static', filename='resources/logo.png') }}" style="width: 5%;min-width: 55px;top: 2px;position: absolute; margin-left: -15%;">
+        </h1>
+            <div class="circle icon" onclick="openNav()">
+                <span class="line top"></span>
+                <span class="line middle"></span>
+                <span class="line bottom"></span>
+            </div>
+            <div class="nav-window">
+                <ul class="nav-list">
+                    <li><a href="{{ url_for('index') }}" >Home</a></li>
+                    <li><a href="{{ url_for('school_index') }}" >Schools</a></li>
+                    <li><a href="#!">Our Works</a></li>
+                    {% if current_user.is_anonymous %}
+                    <li><a href="{{ url_for('login') }}" >Sign in</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('user_page') }}">Your School</a></li>
+                    <li><a href="{{ url_for('logout') }}" >Sign out</a></li>
+                    {% endif %}
+
+                </ul>
+            </div>
+       
+        <nav>
+            <ul>
+                <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('school_index') }}">Schools </a></li>
+                <li><a href="#">Our works</a></li>
+                {% if current_user.is_anonymous %}
+                <li><a href="{{ url_for('login') }}" >Sign in</a></li>
+                {% else %}
+                <li><a href="{{ url_for('user_page') }}">Your School</a></li>
+                <li><a href="{{ url_for('logout') }}" >Sign out</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="content">
+            <div class="img" style="background-image: url('{{ url_for('static', filename='resources/logo.png') }}');background-size:contain"></div>
+            <div class="paragraph">
+                <h2>
+                    The project
+                </h2>
+                <p>
+		    This project aims to encourage young people to believe in themselves, <br/>
+		    raise their voice, have faith in democratic values and engage in causes <br/> 
+                    bigger than themselves. <br/>
+                    Thus they will apply the principles of active citizenship and contribute <br/> 
+                    to a renewal of the use of their democratic rights. <br/> 
+                    This is an effort that has to start with the students themselves: this is <br/>
+                    our main motive in the YES-U! Project (Young Europeans Stand Up!). <br/>
+                    Our objectives are to lead students to reflect <br/>
+                    on the impact of indifference in contrast to dedication, to explore the boundaries <br/>
+                    of their power over things, think critically and creatively about new ways <br/>
+                    to face problems, promote their active participation as members of their respective societies.
+                </p>
+            </div>
+        </div>
+        <div class="content" style="background-color:deepskyblue; box-shadow: 5px 5px grey; border-radius:4px; margin: 0px 100px 0px 100px;">
+            <div class="paragraph">
+                <h2>
+                    The schools
+                </h2>
+                <p>
+                    The six partner schools are:
+                    <ul>
+                        <li>Sandnes videregående skole (upper secondary public school in Sandnes, Norway)
+                        <li>Regionale Scholengemeenschap 't Rijks (comprehensive secondary school in Bergen Op Zoom, The Netherlands)
+                        <li>A’ Arsakeio Tositseio Lykeio Ekalis (a non-profit general upper secondary school in Athens, Greece)
+                        <li>Lycee Vauban (upper secondary school in Brest, France)
+                        <li>Liceo Scientifico Statale Galileo Galilei (science upper secondary school in Catania, Italy)
+                        <li>Gimnazija Kranj ( comprehensive secondary school in Kranj, Slovenia)
+                    </ul>
+                    <a class="button" href="{{ url_for('school_index') }}" >View Schools </a>
+
+            </div>
+            <div class="carousel">
+                <div>
+                    <img class="slide" src= "{{ url_for('static', filename='resources/norway.png') }}" style="max-width: 450px; max-height: 250px; " />
+                    <h5 class="subtitle" align="center"> Sandnes videregående skole <br /> Norway</h5>
+                </div>
+                <div>
+                    <img class="slide" src= "{{ url_for('static', filename='resources/netherlands.jpg') }}" style="max-width: 450px; max-height: 450px;  " />
+                    <h5 class="subtitle" align="center"> Regionale Scholengemeenschap 't Rijks <br /> The Netherlands</h5>
+                </div>
+                <div>
+                    <img class="slide" src="{{ url_for('static', filename='resources/italy.png') }}" style="max-width: 450px; max-height: 300px;  " />
+                    <h5 class="subtitle" align="center">Catania, Italy</h5>
+                </div>
+                <div>
+                    <img class="slide" src="{{ url_for('static', filename='resources/france.jpg') }}" style="max-width: 450px; max-height: 450px;  " />
+                    <h5 class="subtitle" align="center"> Lycee Vauban, France</h5>
+                </div>
+                <div>
+                    <img class="slide" src=" {{ url_for('static', filename='resources/slovenia.jpg') }}" style="max-width: 450px; max-height: 450px;  " />
+                    <h5 class="subtitle" align="center"> Gimnazija Kranj, Slovenia</h5>
+                </div>
+                <div>
+                    <img class="slide" src="{{ url_for('static', filename='resources/greece.jpg') }}" style="max-width: 450px; max-height: 450px; " />
+                    <h5 class="subtitle" align="center"> A’ Arsakeio Tositseio Lykeio Ekalis <br /> Greece</h5>
+                </div>
+
+            </div>
+        </div>
+        <div class="content">
+            <div class="img" style="background-image: url('{{ url_for('static', filename='resources/placeholder-square.png')}}"></div>
+            <div class="paragraph">
+                <h2>
+                    Our works
+                </h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, <br />
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  <br />
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.  <br />
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.  <br />
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br />
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                </p>
+            </div>
+        </div>
+    </div>
+    <footer>
+
+        <div>
+           Made with ♥ by Giovanni Ramistella | Liceo Galileo Galilei, CT
+        </div>
+
+    </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/navigation.js') }}" ></script>
+   
+    <script>
+        var myIndex = 0;
+        carousel();
+
+        function carousel() {
+          var i;
+          var x = document.getElementsByClassName("slide");
+          var y = document.getElementsByClassName("subtitle");
+          for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";  
+            y[i].style.display = "none";
+          }
+          myIndex++;
+          if (myIndex > x.length) {myIndex = 1}    
+          x[myIndex-1].style.display = "block";  
+          y[myIndex-1].style.display = "block";  
+          setTimeout(carousel, 6000); 
+        }
+    </script>
+
+</body>
+</html>
