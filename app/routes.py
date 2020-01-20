@@ -43,8 +43,6 @@ def populate_school_template(school_obj, is_school_owner=0):
         path = path[5:]
         images_path.append(path)
 
-
-    print(images_path, file=sys.stdout)
     if school_obj.description is not None and len(school_obj.description) < 1:
         description = 'You can write whatever you want here!'
     else:
