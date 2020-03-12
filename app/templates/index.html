@@ -18,20 +18,20 @@
         <img src= "{{ url_for('static', filename='resources/erasmus-logo.png') }}" style="width:22%;min-width:180px">
     </h1>
     <div class="navigation">
-        <h1 class="mobile" style="padding-top:0.5em;text-align:center">
-            <img src= "{{ url_for('static', filename='resources/erasmus-logo.png') }}" style="width: 5%;min-width: 160px;top: -6px;position: absolute;margin-left: calc(50% - 35px);display: block;">
-            <img class="logo-img" src= "{{ url_for('static', filename='resources/logo.png') }}" style="width: 5%;min-width: 55px;top: 2px;position: absolute; margin-left: -15%;">
+        <h1 class="mobile">
+            <img class="erasmus-logo" src="{{ url_for('static', filename='resources/erasmus-logo.png') }}">
+            <img class="logo-img" src="{{ url_for('static', filename='resources/logo.png') }}">
         </h1>
-            <div class="circle icon" onclick="openNav()">
+            <div class="circle icon" onclick="toggleNav()">
                 <span class="line top"></span>
                 <span class="line middle"></span>
                 <span class="line bottom"></span>
             </div>
-            <div class="nav-window">
+            <div class="nav-window" style="display:none;">
                 <ul class="nav-list">
                     <li><a href="{{ url_for('index') }}" >Home</a></li>
                     <li><a href="{{ url_for('school_index') }}" >Schools</a></li>
-                    <li><a href="#!">Our Works</a></li>
+                    <li><a href="{{ url_for('work_index') }}">Our Works</a></li>
                     {% if current_user.is_anonymous %}
                     <li><a href="{{ url_for('login') }}" >Sign in</a></li>
                     {% else %}
@@ -46,7 +46,7 @@
             <ul>
                 <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
                 <li><a href="{{ url_for('school_index') }}">Schools </a></li>
-                <li><a href="#">Our works</a></li>
+                <li><a href="{{ url_for('work_index') }}">Our works</a></li>
                 {% if current_user.is_anonymous %}
                 <li><a href="{{ url_for('login') }}" >Sign in</a></li>
                 {% else %}
@@ -57,18 +57,18 @@
         </nav>
     </div>
     <div class="container">
-        <div class="content">
-            <div class="img" style="background-image: url('{{ url_for('static', filename='resources/logo.png') }}');background-size:contain"></div>
+        <div class="content main">
+            <div class="img logo" style="background-image: url('{{ url_for('static', filename='resources/logo.png') }}');background-size:contain"></div>
             <div class="paragraph">
                 <h2>
                     The project
                 </h2>
-                <p>
-		    This project aims to encourage young people to believe in themselves, <br/>
-		    raise their voice, have faith in democratic values and engage in causes <br/> 
+                <p class="desktop-paragraph">
+                    This project aims to encourage young people to believe in themselves, <br/>
+		    raise their voice, have faith in democratic values and engage in causes <br/>
                     bigger than themselves. <br/>
-                    Thus they will apply the principles of active citizenship and contribute <br/> 
-                    to a renewal of the use of their democratic rights. <br/> 
+                    Thus they will apply the principles of active citizenship and contribute <br/>
+                    to a renewal of the use of their democratic rights. <br/>
                     This is an effort that has to start with the students themselves: this is <br/>
                     our main motive in the YES-U! Project (Young Europeans Stand Up!). <br/>
                     Our objectives are to lead students to reflect <br/>
@@ -76,9 +76,22 @@
                     of their power over things, think critically and creatively about new ways <br/>
                     to face problems, promote their active participation as members of their respective societies.
                 </p>
+                <p class="mobile-paragraph">
+		    This project aims to encourage young people to believe in themselves, 
+		    raise their voice, have faith in democratic values and engage in causes  
+                    bigger than themselves. 
+                    Thus they will apply the principles of active citizenship and contribute  
+                    to a renewal of the use of their democratic rights.  
+                    This is an effort that has to start with the students themselves: this is 
+                    our main motive in the YES-U! Project (Young Europeans Stand Up!). 
+                    Our objectives are to lead students to reflect 
+                    on the impact of indifference in contrast to dedication, to explore the boundaries 
+                    of their power over things, think critically and creatively about new ways 
+                    to face problems, promote their active participation as members of their respective societies.
+                </p>
             </div>
         </div>
-        <div class="content" style="background-color:deepskyblue; box-shadow: 5px 5px grey; border-radius:4px; margin: 0px 100px 0px 100px;">
+        <div class="content school-section">
             <div class="paragraph">
                 <h2>
                     The schools
@@ -86,12 +99,12 @@
                 <p>
                     The six partner schools are:
                     <ul>
-                        <li>Sandnes videregående skole (upper secondary public school in Sandnes, Norway)
-                        <li>Regionale Scholengemeenschap 't Rijks (comprehensive secondary school in Bergen Op Zoom, The Netherlands)
-                        <li>A’ Arsakeio Tositseio Lykeio Ekalis (a non-profit general upper secondary school in Athens, Greece)
-                        <li>Lycee Vauban (upper secondary school in Brest, France)
-                        <li>Liceo Scientifico Statale Galileo Galilei (science upper secondary school in Catania, Italy)
-                        <li>Gimnazija Kranj ( comprehensive secondary school in Kranj, Slovenia)
+                        <li>Sandnes videregående skole
+                        <li>Regionale Scholengemeenschap 't Rijks
+                        <li>A’ Arsakeio Tositseio Lykeio Ekalis
+                        <li>Lycee Vauban
+                        <li>Liceo Scientifico Statale Galileo Galilei
+                        <li>Gimnazija Kranj
                     </ul>
                     <a class="button" style="text-decoration:none" href="{{ url_for('school_index') }}" >View Schools </a>
 
@@ -124,20 +137,37 @@
 
             </div>
         </div>
-        <div class="content">
-            <div class="img" style="background-image: url('{{ url_for('static', filename='resources/placeholder-square.png')}}"></div>
-            <div class="paragraph">
-                <h2>
-                    Our works
-                </h2>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, <br />
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  <br />
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.  <br />
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.  <br />
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br />
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                </p>
+        <div class="content" style="flex-direction:column">
+            <h2>Our works</h2>
+            <div class="slideshow-container">
+                 {% for work in works %}
+                  <div class="slide-container" style="position:absolute;width:100%;height:100%;">
+                    <div class="slide-content" style="position:absolute;">
+                        <img class="slide-img" src="{{ url_for('static', filename='resources/norway.png') }}">
+                        <div class="slide-paragraph">
+                            <h4 style="padding-top: 50px;">{{ work.title }}
+                        </h4>
+                        <p style="flex-shrink: 7;position: relative; margin-top: 40px;margin-right: 80px;">
+                            {{ work.description }}
+                        </p>
+                        </div>
+                    </div>
+                      <div class="author">
+                        <p>{{ get_author_from_id(work.author_id) }}</p>
+                    </div>
+                  </div>
+
+                {% endfor %}
+
+              <a class="prev" style="left:0px" onclick="plusSlides(-1)">&#10094;</a>
+              <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+
+
+            <div class="dot-container">
+              <span class="dot" onclick="currentSlide(1)"></span>
+              <span class="dot" onclick="currentSlide(2)"></span>
+              <span class="dot" onclick="currentSlide(3)"></span>
             </div>
         </div>
     </div>
@@ -153,27 +183,8 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}" ></script>
     <script src="{{ url_for('static', filename='js/navigation.js') }}" ></script>
-   
-    <script>
-        var myIndex = 0;
-        carousel();
-
-        function carousel() {
-          var i;
-          var x = document.getElementsByClassName("slide");
-          var y = document.getElementsByClassName("subtitle");
-          for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";  
-            y[i].style.display = "none";
-          }
-          myIndex++;
-          if (myIndex > x.length) {myIndex = 1}    
-          x[myIndex-1].style.display = "block";  
-          y[myIndex-1].style.display = "block";  
-          setTimeout(carousel, 6000); 
-        }
-    </script>
 
 </body>
 </html>

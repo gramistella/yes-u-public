@@ -1,0 +1,35 @@
+#work{
+    justify-content: center;
+    padding-top: 0px;
+}
+
+#edit-form{
+    position: relative;
+    bottom: 10%;
+}
+#edit-form > form{
+    bottom: 125px;
+}
+ul.errors > li {
+    list-style: none;
+    background: red;
+    margin: 0;
+    padding: 0;
+
+}
+
+footer {
+    bottom: -45vh;
+    margin: unset;
+}
+
+.media-panel{
+    bottom:10px;
+}
+
+#media-panel-title{
+    color: white;
+    position: absolute;
+    left: 0;
+    right: 0;
+}

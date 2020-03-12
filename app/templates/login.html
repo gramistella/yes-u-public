@@ -19,20 +19,20 @@
         <img src= "{{ url_for('static', filename='resources/erasmus-logo.png') }}" style="width:22%;min-width:180px">
     </h1>
     <div class="navigation">
-        <h1 class="mobile" style="padding-top:0.5em;text-align:center">
-            <img src= "{{ url_for('static', filename='resources/erasmus-logo.png') }}" style="width: 5%;min-width: 160px;top: -6px;position: absolute;margin-left: calc(50% - 35px);display: block;">
-            <img class="logo-img" src= "{{ url_for('static', filename='resources/logo.png') }}" style="width: 5%;min-width: 55px;top: 2px;position: absolute; margin-left: -15%;">
+        <h1 class="mobile">
+            <img class="erasmus-logo" src="{{ url_for('static', filename='resources/erasmus-logo.png') }}">
+            <img class="logo-img" src="{{ url_for('static', filename='resources/logo.png') }}">
         </h1>
-            <div class="circle icon" onclick="openNav()">
+            <div class="circle icon" onclick="toggleNav()">
                 <span class="line top"></span>
                 <span class="line middle"></span>
                 <span class="line bottom"></span>
             </div>
-            <div class="nav-window">
+            <div class="nav-window" style="display:none;">
                 <ul class="nav-list">
                     <li><a href="{{ url_for('index') }}" >Home</a></li>
                     <li><a href="{{ url_for('school_index') }}" >Schools</a></li>
-                    <li><a href="#!">Our Works</a></li>
+                    <li><a href="{{ url_for('work_index') }}">Our Works</a></li>
                     <li><a href="{{ url_for('login') }}" >Sign in</a></li>
                 </ul>
             </div>
@@ -41,7 +41,7 @@
             <ul>
                 <li><a href="{{ url_for('index') }}">Home</a></li>
                 <li><a href="{{ url_for('school_index') }}">Schools </a></li>
-                <li><a href="#">Our works</a></li>
+                <li><a href="{{ url_for('work_index') }}">Our works</a></li>
                 <li><a class="active" href="{{ url_for('login') }}">Sign in </a></li>
             </ul>
         </nav>
@@ -87,26 +87,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/navigation.js') }}" ></script>
-
-    <script>
-        var myIndex = 0;
-        carousel();
-
-        function carousel() {
-          var i;
-          var x = document.getElementsByClassName("slide");
-          var y = document.getElementsByClassName("subtitle");
-          for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
-            y[i].style.display = "none";
-          }
-          myIndex++;
-          if (myIndex > x.length) {myIndex = 1}
-          x[myIndex-1].style.display = "block";
-          y[myIndex-1].style.display = "block";
-          setTimeout(carousel, 6000);
-        }
-    </script>
 
 </body>
 </html>

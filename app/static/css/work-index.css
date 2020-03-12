@@ -13,7 +13,7 @@ div.school-space {
     overflow: hidden;
     width:100%;
     top:-7%;
-
+    border-radius:20px;
     flex-shrink:0;
 
 }
@@ -29,31 +29,30 @@ div.school-space {
 
 .container{
     display:flex;
-    height: 900px;
+    height: 600px;
     align-items:center;
     justify-content:center;
-    
+
 }
 
 footer{
-    position: relative;
+    position: absolute;
     margin: auto;
     width: 100%;
-    padding-top:20px;
-    bottom:-140px;
+    bottom:unset;
+
 }
 
 .panel {
     width: 80%;
-    height: 110%;
-    background-color: whitesmoke;
+    height: 0%;
+
     justify-content: center;
     align-items: center;
     display: flex;
     flex-direction: column;
     border-radius: 20px;
-    position:relative;
-    bottom:-6%;
+    padding-bottom: 20px;
 }
 
 .bio{
@@ -95,7 +94,7 @@ footer{
 
 .media-panel {
     width: 85%;
-    background: #5073B3;
+    background: #DBD0BC;
 
     position:relative;
     top: -5%;
@@ -111,10 +110,10 @@ footer{
 .media {
     display: grid;
     grid-gap: calc(var(--gutter) / 2);
-    grid-auto-flow: column;
+    grid-template-columns: repeat(5, calc(29% - var(--gutter) * 2));
     grid-template-rows: minmax(150px, 1fr);
-    overflow-x: auto;
-    scrollbar-color: lightgray white;
+    overflow-x: scroll;
+
     padding-bottom: calc(.75 * var(--gutter));
     margin-bottom: calc(-.25 * var(--gutter));
 }
@@ -142,14 +141,6 @@ footer{
     max-height: 90%;
     object-fit: contain;
 }
-
-#zoom-video{
-    width:75%;
-    right: 50%;
-    transform: translateX(16.5%);
-    max-height: 90%;
-    object-fit: contain;
-}
 .media > div{
     object-fit:contain;
     overflow:hidden;
@@ -157,11 +148,11 @@ footer{
 .works {
     position: relative;
     width: 98%;
-    height: 300px;
+    height: 550px;
     max-height: 100%;
-    background-color: whitesmoke;
+    background-color: #D0D0D0;
     display: inline-block;
-    overflow: auto;
+    overflow-x: hidden;
     border-radius: 10px;
     top:-2%;
 }
@@ -173,22 +164,24 @@ footer{
     flex-direction: column;
     align-content: center;
     align-items: center;
-    background-color: whitesmoke;
+    background-color: #A9A9A9;
     border-radius:15px;
     position:relative;
-    top:-3%
+    top:-19%;
+    box-shadow: 0px 1px 2px 0px black;
+
 }
 
 .media > div, .item {
     scroll-snap-align: center;
-    padding: calc(30px / 10 * 1.5);
+    padding: calc(var(--gutter) / 2 * 1.5);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #5073B3;
+    background: #fff;
+    border-radius: 8px;
     height:150px;
-    width:300px;
 }
 .work-table {
     margin-left: auto;
@@ -198,22 +191,17 @@ footer{
     border-collapse: separate;
     position:relative;
     width: 100%;
-    
+
 }
 
-.button.delete{
-    background-color:red;
-}
-
-.work-buttons{
-    display:flex;
+.work-table:last-child {
+  margin-bottom: 10px;
 }
 
 .work-cell{
     margin-top: 10px;
-    background-color: aliceblue;
-
-    height:130px;
+    background-color:aliceblue;
+    height:250px;
     width:100%;
     border-radius: 10px;
     display:flex;
@@ -221,40 +209,11 @@ footer{
     align-items:center;
     flex-direction:column;
     overflow:hidden;
-    box-shadow: 0px 1px 3px black;
+    box-shadow: 0px 3px 5px 0px black
 }
 
-.work-cell-text{
-    flex-grow:2;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-}
-
-.work-cell-description{
-    text-align:center;
-}
-
-.create-work-cell{
-    margin-top: 10px;
-
-    height:55px;
-    width:100%;
-
-    display:flex;
-    align-content:center;
-    align-items:center;
-    flex-direction:column;
-    overflow:hidden;
-
-}
-
-.new-work.button{
-    width: 99%;
-    height: 79%;
-    line-height: 33px;
+.cell-headers.upload{
+    right: 30px
 }
 h4{
     display:inline-block;
@@ -302,22 +261,33 @@ h6{
 
 #media-label{
     overflow: hidden;
-    text-align:left;
 }
 
 .flex{ display: flex;}
 .hidden{ display: none; }
 
 
+@media(max-width:1680px) {
+    .cell-headers{
+        width: 200px;
+    }
+    .cell-headers.upload{
+        right: -30px;
+    }
+}
+}
 @media(max-width:1000px) {
 
     .panel{
-        width:90%;
+        width:100%;
     }
 
     .media{
         grid-template-columns: repeat(5, calc(50% - var(--gutter) * 2));
     }
+
+
+
 }
 
 @media (max-width:768px) {
@@ -327,15 +297,34 @@ h6{
     }
     .panel{
         width: 107%;
-        bottom: -8%;
+        top: 21%;
         border-radius: 0px;
+        position:relative;
+    }
+    .panel-title{
+        font-size: 2em;
     }
 
+    .work-panel{
+        border-radius: 0px;
+        width: 100%;
+    }
+    .works {
+        height: 82vh;
+    }
     .school-space{
         border-radius: 0px !important;
     }
     .footer{
         padding-top: 1px !important;
+    }
+
+    .cell-headers{
+        width: 200px;
+    }
+
+    .cell-headers.upload{
+        right: -30px;
     }
 }
 

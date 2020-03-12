@@ -2,7 +2,7 @@ from app import db, login
 from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash,generate_password_hash
-
+from sqlalchemy.exc import InvalidRequestError
 
 class Schools(UserMixin, db.Model):
 
@@ -13,6 +13,7 @@ class Schools(UserMixin, db.Model):
     password = db.Column(db.String(16))
     description = db.Column(db.String(512))
     header_img = db.Column(db.String(64))
+    works = db.relationship('Work', backref='user')
 
     def check_password(self, password):
         return check_password_hash(generate_password_hash(self.password), password)
@@ -23,7 +24,13 @@ class Schools(UserMixin, db.Model):
 
 @login.user_loader
 def load_user(user_id):
-    return Schools.query.get(int(user_id))
+    user = None
+    try:
+        user = Schools.query.get(int(user_id))
+    except InvalidRequestError:
+        db.session.rollback()
+        user = Schools.query.get(int(user_id))
+    return user
 
 
 class Media(db.Model):
@@ -40,13 +47,13 @@ class Media(db.Model):
 
 
 class Work(db.Model):
-    __tablename__ = 'uploaded-work'
+    __tablename__ = 'uploaded-projects'
     id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey('schools.id'))
     upload_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     title = db.Column(db.String(64))
-    attached_media = db.Column()
-    description = db.Column(db.String(512))
+    attached_media = db.Column(db.String(64))
+    description = db.Column(db.Text)
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)

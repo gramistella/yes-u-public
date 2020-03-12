@@ -39,9 +39,9 @@ var editDescription = function()
         }));
         isDescriptionEditable = 0;
 
-        $('#description-input').hide();
+        $('#edit-form').hide();
         $('#description-input').text('');
-
+        $('#description-input').hide();
         $('#description-text').show();
 
     } else {
@@ -53,3 +53,8 @@ var editDescription = function()
     }
 }
 
+$("#media").change(function() {
+  filename = this.files[0].name
+  console.log(filename);
+  document.getElementById("media-label").innerText = filename
+});
