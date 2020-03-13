@@ -8,8 +8,10 @@ import logging
 
 import os, sys
 
+
 app = Flask(__name__)
-app.run(threaded=True)
+if __name__ == '__main__':
+    app.run(threaded=True)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 login = LoginManager(app)
