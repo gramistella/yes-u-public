@@ -5,8 +5,6 @@ import sys
 from app.forms import LoginForm, WorkForm
 from app.models import Schools, Media, Work
 from flask_login import current_user, login_user, logout_user, login_required, AnonymousUserMixin
-from dateutil import parser
-from werkzeug.urls import url_parse
 from flask_cors import CORS
 
 CORS(app)
