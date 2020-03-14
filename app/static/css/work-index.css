@@ -39,7 +39,7 @@ footer{
     position: absolute;
     margin: auto;
     width: 100%;
-    bottom:unset;
+    bottom: 0px;
 
 }
 
@@ -275,7 +275,7 @@ h6{
         right: -30px;
     }
 }
-}
+
 @media(max-width:1000px) {
 
     .panel{
@@ -286,7 +286,18 @@ h6{
         grid-template-columns: repeat(5, calc(50% - var(--gutter) * 2));
     }
 
+    .container {
+        padding-left: unset;
+        padding-right: unset;
+    }
 
+    .works {
+        height: 650px;
+    }
+
+    .work-panel{
+        top: 40px;
+    }
 
 }
 

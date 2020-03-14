@@ -32,7 +32,7 @@ footer{
     justify-content: flex-start;
     text-align: center;
     width: 100%;
-    padding-top: 30px;
+
     position:relative;
 }
 
@@ -40,7 +40,7 @@ footer{
     width: 100%;
     background: #5073B3;
     position: absolute;
-    bottom: 90px;
+    bottom: 60px;
     top: unset;
 }
 

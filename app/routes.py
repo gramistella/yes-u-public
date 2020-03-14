@@ -1,5 +1,5 @@
 from flask import render_template, flash, url_for, redirect, request, send_from_directory, abort, escape, make_response, jsonify
-from app import app, db
+from app import app, db, models
 import os
 import sys
 from app.forms import LoginForm, WorkForm
@@ -38,15 +38,27 @@ def get_author_from_id(author_id):
     return Schools.query.filter_by(id=author_id).all()[0].name
 
 
+def true_if_owner(obj, author):
+    ownership = 0
+    try:
+        if obj.author_id == author.id:
+            ownership = 1
+    except AttributeError:
+        print('Attribute error in is_owner()', file=sys.stdout)
+    return ownership
+
+
 app.jinja_env.globals.update(get_author_from_id=get_author_from_id)
+
 
 @app.template_filter('strftime')
 def _jinja2_filter_datetime(date, fmt=None):
 
     date = date.format()
     native = date.replace(tzinfo=None)
-    format='%b %d, %Y'
-    return native.strftime(format)
+    format_string ='%b %d, %Y'
+    return native.strftime(format_string)
+
 
 @app.route('/works')
 def work_index():
@@ -64,6 +76,7 @@ def favicon():
             'static'),
         'favicon.ico',
         mimetype='image/vnd.microsoft.ico')
+
 
 
 @app.route('/schools/user-page')
@@ -125,7 +138,7 @@ def login():
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('login'))
-        print(form.remember_me.data, file=sys.stdout)
+
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('index'))
     return render_template('login.html', title='Sign In', form=form)
@@ -162,7 +175,7 @@ def handle_request():
     if request.method == 'POST':
         content = request.get_json(silent=True)
         request_type = content['type']
-
+        print('[ POST type = {} ]'.format(request_type), file=sys.stdout)
         # Edit school description
         if request_type == 1:
             description = content['description']
@@ -189,7 +202,7 @@ def handle_request():
                 if len(title) > max_characters_allowed_work_title else title
             description = content['description']
             description = (description[:max_characters_allowed_work_desc]) \
-                if len(title) > max_characters_allowed_work_desc else title
+                if len(description) > max_characters_allowed_work_desc else description
             attached_media = content['attached_media']
             id_list = []
 
@@ -201,16 +214,13 @@ def handle_request():
             description = (description[:max_characters_allowed_bio]) \
                 if len(description) > max_characters_allowed_bio else description
 
-            if selected_work.author_id == current_user.id:
-                if selected_work.title.split() != title.split():
-                    selected_work.title = title
-                if selected_work.description.split() != description.split():
-                    selected_work.description = description
-                if selected_work.attached_media != id_list:
-                    selected_work.attached_media = id_list
-                else:
-                    pass
+            if true_if_owner(selected_work, current_user):
+
+                selected_work.title = title
+                selected_work.description = description
+                selected_work.attached_media = id_list
                 db.session.commit()
+
 
 
     return '', 204
@@ -255,9 +265,7 @@ def allowed_media(filename):
 @app.route('/works/<work_id>', methods=('GET', 'POST'))
 def user_work(work_id):
     current_work = Work.query.get_or_404(work_id)
-    is_owner = 0
-    if current_work.author_id == current_user.id:
-        is_owner = 1
+    is_owner = true_if_owner(current_work, current_user)
     media_list = []
     attached_media = []
     try:
@@ -268,7 +276,7 @@ def user_work(work_id):
         media_list.append(Media.query.get_or_404(media_id))
 
     form = WorkForm()
-    print('getting request', file=sys.stdout)
+
     return render_template(
         '/works/work.html',
         work=current_work,
@@ -316,7 +324,7 @@ def delete_work():
     work_id = request.get_json()["work_id"]
     print('Work_id: ' + str(work_id), file=sys.stdout)
     work = Work.query.filter_by(id=work_id).one()
-    if work.author_id == current_user.id:
+    if true_if_owner(work, current_user):
         db.session.delete(work)
         db.session.commit()
 
