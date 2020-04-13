@@ -11,9 +11,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/navigation.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/school-template.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/work-template.css') }}">
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.css"/>
-
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/slick-theme.css') }}"/>
 
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <title>Yes-U! - {{ work.title }}</title>
@@ -70,11 +67,10 @@
 
         <div class="panel">
 
-
             <div id="work" {% if is_owner %}
                         style="padding-top:20px;"
                             {% endif %}>
-                <h4> {{ work.title }}</h4>
+                <h4>{{ work.title }}</h4>
                 <div id="description">
                     <p>{{ work.description }}</p>
                 </div>
@@ -85,28 +81,40 @@
                       <source src="" type="video/mp4">
                       Your browser does not support HTML5 video.
                     </video>
+                <a id="zoom-pdf" href=""></a>
+                {% if is_school_owner %}
+                <a class="button delete" style="display:flex; width:133px;position:absolute;color:white;bottom:50px;left:0;right:0" onclick="">Delete Media</a>
+                {% endif %}
             </div>
             <div class="media-panel">
 
-                <div style="display:inline-block;height:75px">
+                <div style="display:inline-block;height:70px">
 
                 <h4 style="color:white">
                     Attached Media:
                 </h4>
-
+                    <p class="media-tip" >Click to view the media files</p>
                     </div>
                 <div id="media-slider-public" class="media-slider">
 
                     {% for media in media_list %}
-                    {% if media.type == 1 %}
-                    <div><img id="single-media-{{loop.index}}" src="{{ media.path[5:] }}" style="width:300px;height:auto;box-shadow: 0px 0px 10px black;z-index: 9;"></div>
-                    {% elif media.type == 2 %}
-                    <div><video width="310" id="single-video-{{loop.index}}">
-                      <source src="{{ media.path[5:] }}" type="video/mp4">
-                      Your browser does not support HTML5 video.
-                    </video>
+                    <div class="selectable" id="single-media-{{ media.id }}">
+
+                        {% if media.type == 1 %}
+                        <img class="single-media" src="{{ media.path[5:] }}" >
+                        {% elif media.type == 2 %}
+                        <img class="media-play-button" src="{{ url_for('static', filename='resources/play-button.png') }}" >
+                        <video class="single-media">
+                          <source src="{{ media.path[5:] }}" type="video/mp4">
+                          Your browser does not support HTML5 video.
+                        </video>
+                        {% elif media.type == 3 %}
+                        <div class="pdf-container">
+                            <img class="single-media" src="{{ url_for('static', filename='resources/pdf-placeholder-icon.png') }}" >
+                            <p>{{ (media.path[26:])[:-4] }}</p>
+                        </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
                     {% endfor %}
 
                 </div>
@@ -114,7 +122,7 @@
             </div>
             {% if is_owner %}
             <div id="edit-form" style="display:none">
-                 <form method="POST" style="bottom:145px;">
+                 <form method="POST">
                     <div class="form-field" id="form-title">{{ form.title.label }} {{ form.title }}
                       {% if form.title.errors %}
                         <ul class="errors">
@@ -134,32 +142,17 @@
                       {% endif %}
                     </div>
                   </form>
-                <div class="media-panel">
+                <div class="media-panel" style="margin-bottom: 30px;">
 
                 <div style="display:inline-block;height:75px">
 
-                <h4 style="color:white;position:absolute;left:0;right:0">
+                <h4 id="media-panel-title" style="color:white;position:absolute;left:0;right:0">
                     Attached Media:
                 </h4>
-                    <p class="media-tip"></p>
-
-
-                <form action="/work/upload" method="POST" enctype="multipart/form-data" style="display:flex; width:300px; float:right;top:-100%;position:relative;">
-
-                    <div class="form-group">
-                      <div class="custom-file">
-                        <label class="custom-file-label" for="media" id="media-label">Select image...</label>
-                          <input type="file" class="custom-file-input" name="media" id="media">
-                      </div>
+                    <p class="media-tip" id="media-tip"></p>
                     </div>
 
-                    <button type="submit" class="btn btn-primary img-upload-button">Upload</button>
-
-                </form>
-
-                    </div>
-
-                <div id="media-slider">
+                <div id="media-slider" class="media-slider">
 
                 </div>
             </div>
@@ -176,16 +169,12 @@
         </div>
 
     </footer>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    <script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
-    {% if is_school_owner %}
-    <script src="{{ url_for('static', filename='js/your-page.js') }}"></script>
-    {% endif %}
-
-    <script src="{{ url_for('static', filename='js/work.js') }}"></script>
+    <script type="application/javascript" src="{{ url_for('static', filename='libs/jquery3.4.1.min.js') }}"></script>
+    <script type="application/javascript" src="{{ url_for('static', filename='libs/media.js') }}"></script>
+    <script type="application/javascript" src="{{ url_for('static', filename='js/navigation.js') }}"></script>
+    <script type="application/javascript" src="{{ url_for('static', filename='js/utils.js') }}"></script>
+    <script type="application/javascript" src="{{ url_for('static', filename='js/work.js') }}"></script>
 
 </body>
 </html>

@@ -1,14 +1,16 @@
-$(document).ready(function () {
+isShowingPdf = false
 
-        var confirmation_display_works=0;
-        var to_delete = null;
-        work_id = null;
+$(document).ready(function () {
 
         var display=0;
         playing_media = null;
+
         $( "#zoom-close" ).click(function() {
           if (display == 1){
 
+                if (isShowingPdf){
+                    isShowingPdf = false;
+                }
                 document.getElementById("zoom-media").className = 'hidden';
                 $("body").removeClass("modal-open");
                 if (playing_media != null){
@@ -17,59 +19,45 @@ $(document).ready(function () {
                 display = 0;
            }
         });
-        $( ".media>div" ).click(function() {
-            if (display == 0){
-                src_img = $(this).find('img').attr('src');
-                src_video = $(this).find('video').find('source').attr('src');
-                if (src_img == null){
-                    $("#zoom-video").attr('src',src_video);
-                    $("#zoom-video").show();
-                    $("#zoom-img").hide();
-                    playing_media = $(this).find('video').attr('id');
-                } else {
-                    $("#zoom-img").attr('src',src_img);
-                    $("#zoom-video").hide();
-                    $("#zoom-img").show();
-                }
-                document.getElementById("zoom-media").className = 'flex';
-                $("body").addClass("modal-open");
-                display = 1;
-            }
-        });
-        $( ".work-buttons > a.delete" ).click(function( event ) {
+        $(document).on("click","#media-slider > div", function(event) {
+            if ($(event.target).prop('tagName') != 'A'){
+                if (display == 0){
+                    media_id = $(this).attr('id').substring(13);
+                    src_img = $(this).find('img').attr('src');
+                    src_img_pdf = $(this).find('div').find('img').attr('src');
+                    src_video = $(this).find('video').find('source').attr('src');
+                    if (src_video != null){
+                        $("#zoom-video").attr('src',src_video);
+                        $("#zoom-video").show();
+                        $("#zoom-img").hide();
+                        $("#zoom-pdf").hide();
+                        playing_media = $(this).find('video').attr('id');
+                    } else if (src_img_pdf != null){
+                        pdf_name = $(this).find('div').find('p').text();
+                        pdf_src = '/static/user_uploads/' + pdf_name + '.pdf';
+                        $("#zoom-pdf").attr('href',pdf_src);
+                        xheight = window.innerHeight/1.4;
+                        ywidth = ($(document).width()/100)*75;
+                        $('#zoom-pdf').media({height:xheight});
+                        $("#zoom-video").hide();
+                        $("#zoom-img").hide();
+                        $("#zoom-pdf").show();
+                        isShowingPdf = true;
+                    } else if (src_img != null){
+                        $("#zoom-img").attr('src',src_img);
+                        $("#zoom-video").hide();
+                        $("#zoom-pdf").hide();
+                        $("#zoom-img").show();
+                    }
 
-            if (confirmation_display_works == 0){
-                    $("#confirmation-dialog-container").css("display", "unset");
+                    if ( $('#zoom-media > a.button.delete').length ){
+                        $('#zoom-media > a.button.delete').attr('onClick', 'deleteMedia('+ media_id +');');
+                    }
+                    document.getElementById("zoom-media").className = 'flex';
                     $("body").addClass("modal-open");
-                    confirmation_display = 1;
-                    work_id =  $(event.target).parent(".work-buttons").parent().parent().parent().parent().attr('id');
-                    work_id = work_id.split("_")[1];
-
-             }
-        });
-        $( ".confirmation-dialog-buttons > a.delete" ).click(function(){
-
-            $.ajax({
-                url: '/works/delete',
-                type: 'POST',
-                data: JSON.stringify ({
-                    'work_id': work_id
-                }),
-
-                contentType: "application/json",
-                dataType: 'json',
-                success: function(response){
-                    location.reload()
+                    display = 1;
                 }
-        });
-
-
-        });
-        $( ".confirmation-dialog-buttons > a.cancel" ).click(function(){
-            $("#confirmation-dialog-container").css("display", "none");
-            $("body").removeClass("modal-open");
-            confirmation_display_works = 0;
+            }
         });
 
     });
-

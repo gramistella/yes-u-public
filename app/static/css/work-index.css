@@ -18,6 +18,10 @@ div.school-space {
 
 }
 
+.cell-headers {
+    padding-top: 10px !important;
+}
+
 .school-space > img {
     flex-shrink: 0;
     min-width: 100%;
@@ -32,6 +36,8 @@ div.school-space {
     height: 600px;
     align-items:center;
     justify-content:center;
+    margin-bottom: 50px;
+}
 
 }
 
@@ -150,7 +156,7 @@ footer{
     width: 98%;
     height: 550px;
     max-height: 100%;
-    background-color: #D0D0D0;
+    background-color: whitesmoke;
     display: inline-block;
     overflow-x: hidden;
     border-radius: 10px;
@@ -164,7 +170,7 @@ footer{
     flex-direction: column;
     align-content: center;
     align-items: center;
-    background-color: #A9A9A9;
+    background-color: whitesmoke;
     border-radius:15px;
     position:relative;
     top:-19%;
@@ -200,8 +206,8 @@ footer{
 
 .work-cell{
     margin-top: 10px;
-    background-color:aliceblue;
-    height:250px;
+    background-color: ghostwhite;
+    height:200px;
     width:100%;
     border-radius: 10px;
     display:flex;

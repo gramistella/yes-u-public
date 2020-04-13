@@ -2,7 +2,7 @@ from app import db, login
 from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash,generate_password_hash
-from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.exc import StatementError
 
 class Schools(UserMixin, db.Model):
 
@@ -15,7 +15,7 @@ class Schools(UserMixin, db.Model):
     header_img = db.Column(db.String(64))
     works = db.relationship('Work', backref='user')
 
-    def check_password(self, password):
+    def validate_password(self, password):
         return check_password_hash(generate_password_hash(self.password), password)
 
     def __repr__(self):
@@ -27,7 +27,7 @@ def load_user(user_id):
     user = None
     try:
         user = Schools.query.get(int(user_id))
-    except InvalidRequestError:
+    except StatementError:
         db.session.rollback()
         user = Schools.query.get(int(user_id))
     return user

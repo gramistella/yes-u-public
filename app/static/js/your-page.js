@@ -1,4 +1,36 @@
 isDescriptionEditable = 0;
+isUploadFormVisible = 0;
+confirmation_display_works = 0;
+confirmation_display_media = 0;
+work_id = 0;
+media_id = 0;
+
+window.addEventListener("dragover",function(e){
+  e = e || event;
+  e.preventDefault();
+},false);
+window.addEventListener("drop",function(e){
+  e = e || event;
+  e.preventDefault();
+},false);
+
+Dropzone.autoDiscover = false;
+$(function() {
+    $('#dropper').dropzone({
+        paramName: 'file',
+        chunking: true,
+        forceChunking: true,
+        url: '/upload',
+        method: 'post',
+        maxFilesize: 1025, // megabytes
+        chunkSize: 1000000 // bytes
+    });
+});
+
+$('#dropper').on("totaluploadprogress", function(progress) {
+  $(".dz-progress > dz-upload").style.width = progress + "%";
+});
+
 
 (function () {
     var a = document.getElementById("description-input"),
@@ -23,38 +55,128 @@ isDescriptionEditable = 0;
 
 var editDescription = function()
 {
-     var input = document.getElementById("description-input");
-
+    descriptionInput = document.getElementById("description-input");
+    description = $("#description-text").text();
     if (isDescriptionEditable){
 
-        var description = input.value;
+        description = descriptionInput.value;
         $('#description-text').text(description);
         $('#edit-button').text('Edit description');
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", 'http://127.0.0.1:5000/backend', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({
-         type: 1,
-         description: description
-        }));
-        isDescriptionEditable = 0;
+        $.ajax({
+            url: '/backend',
+            type: 'POST',
+            data: JSON.stringify ({
+                'type': 1,
+                'description': description
+            }),
 
-        $('#edit-form').hide();
-        $('#description-input').text('');
-        $('#description-input').hide();
-        $('#description-text').show();
-
+            contentType: "application/json",
+            dataType: 'json',
+            success: function(response){
+                isDescriptionEditable = 0;
+                $('#edit-form').hide();
+                $('#description-input').text('');
+                $('#description-input').hide();
+                $('#description-text').show();
+            },
+            fail: function(response){
+                location.reload();
+            }
+        });
     } else {
         $('#edit-button').text('Save edits');
         $('#description-text').hide();
+        $('#description-input').val(description);
         $('#description-input').show();
         isDescriptionEditable = 1;
-
     }
 }
 
-$("#media").change(function() {
-  filename = this.files[0].name
-  console.log(filename);
-  document.getElementById("media-label").innerText = filename
+var uploadMedia = function()
+{
+    dropperForm = document.getElementById("upload-form");
+    if (isUploadFormVisible){
+        dropperForm.className = 'hidden';
+        isUploadFormVisible = 0;
+        $("body").removeClass("modal-open");
+        refreshMedia(true);
+    } else {
+        dropperForm.className = '';
+        isUploadFormVisible = 1;
+        $("body").addClass("modal-open");
+    }
+
+}
+
+var deleteMedia = function(id){
+    if (confirmation_display_media == 0){
+            document.getElementById("zoom-media").className = 'hidden';
+            $("#confirmation-dialog-container").css("display", "unset");
+            $("#confirmation-dialog-container").find('div').find('p').text(' Are you sure you want to delete this media?')
+            $("body").addClass("modal-open");
+            confirmation_display_media = 1;
+            media_id = id
+     }
+}
+
+$( ".work-buttons > a.delete" ).click(function( event ) {
+
+    if (confirmation_display_works == 0){
+            $("#confirmation-dialog-container").css("display", "unset");
+            $("#confirmation-dialog-container").find('div').find('p').text(' Are you sure you want to delete this work?')
+            $("body").addClass("modal-open");
+            confirmation_display_works = 1;
+            work_id =  $(event.target).parent(".work-buttons").parent().parent().parent().parent().attr('id');
+            work_id = work_id.split("_")[1];
+
+     }
+});
+$( ".confirmation-dialog-buttons > a.delete" ).click(function(){
+    if (confirmation_display_media == 0){
+        $.ajax({
+            url: '/works/delete',
+            type: 'POST',
+            data: JSON.stringify ({
+                'work_id': work_id
+            }),
+
+            contentType: "application/json",
+            dataType: 'json',
+            beforeSend: function(){
+                $('#loading-spinner').show();
+                $('#confirmation-info').hide();
+            },
+            success: function(response){
+                location.reload();
+            }
+        });
+    }else{
+        $.ajax({
+            url: '/media/delete',
+            type: 'POST',
+            data: JSON.stringify ({
+                'media_id': media_id
+            }),
+
+            contentType: "application/json",
+            dataType: 'json',
+            beforeSend: function(){
+                $('#loading-spinner').show();
+                $('#confirmation-info').hide();
+            },
+            success: function(response){
+                location.reload()
+            }
+        });
+    }
+});
+$( ".confirmation-dialog-buttons > a.cancel" ).click(function(){
+    $("#confirmation-dialog-container").css("display", "none");
+    $("body").removeClass("modal-open");
+    if (confirmation_display_media == 0){
+        confirmation_display_works = 0;
+    } else {
+        confirmation_display_media = 0;
+        document.getElementById("zoom-media").className = 'flex';
+    }
 });

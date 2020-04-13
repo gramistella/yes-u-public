@@ -5,10 +5,9 @@
 .panel{
 
     position: absolute;
-    top: 32%;
     left: 10%;
-    height: 75%;
-
+    height: 700px;
+    bottom: unset;
 }
 
 .fade{
@@ -32,7 +31,6 @@ footer{
     justify-content: flex-start;
     text-align: center;
     width: 100%;
-
     position:relative;
 }
 
@@ -44,47 +42,16 @@ footer{
     top: unset;
 }
 
-.media-panel > div > p {
-    position: relative;
-    padding-top: 35px;
+.media-tip{
+    color: white;
+    padding:unset;
+    top: 25px !important;
+}
+#media-tip{
+    top: 65px !important;
     color: white;
 }
 
-#media-slider {
-    display: grid;
-    grid-gap: calc(var(--gutter) / 2);
-    grid-auto-flow: column;
-    grid-template-rows: minmax(150px, 1fr);
-    overflow-x: auto;
-    scrollbar-color: lightgray white;
-    padding-bottom: calc(.75 * var(--gutter));
-    margin-bottom: calc(-.25 * var(--gutter));
-}
-
-.media-slider {
-    display: grid;
-    grid-gap: calc(var(--gutter) / 2);
-    grid-template-columns: repeat(5, calc(29% - var(--gutter) * 6));
-    grid-template-rows: minmax(150px, 1fr);
-    overflow-x: auto;
-    scrollbar-color: lightgray white;
-    padding-bottom: calc(.75 * var(--gutter));
-    margin-bottom: calc(-.25 * var(--gutter));
-}
-
-#media-slider > div{
-    object-fit:contain;
-    overflow:hidden;
-    height: 150px;
-    width: 310px;
-}
-
-.media-slider > div{
-    object-fit:contain;
-    overflow:hidden;
-    height: 150px;
-    width: 310px;
-}
 #description > p {
     white-space: pre-line;
 }
@@ -107,29 +74,23 @@ textarea#body{
     align-content: center;
     align-items: center;
     height: 85%;
-    width: 98%;
+    width: 100%;
 }
 
 #edit-form > form{
-    width: 100%;
-    position:relative;
-    bottom: 100px;
+    width: 98%;
+    position: absolute;
+    top: 5px;
 }
 
 .selected-media{
-    box-shadow: 0px 4px 10px darkturquoise;
-    border-radius: 15px;
+    -webkit-filter: drop-shadow(5px 5px 8px darkturquoise);
+
 }
 @media(max-width:1400px) {
 
     footer{
         margin-top: 70px
-    }
-
-    #media-slider {
-
-        grid-template-columns: repeat(5, calc(50% - var(--gutter) * 6));
-
     }
 }
 
@@ -139,9 +100,8 @@ textarea#body{
     .panel{
         width:100%;
         left: unset;
-        top: 21.5%;
         border-radius: 0px;
-        height: 75%;
+
     }
     .container{
         height: 695px;
@@ -157,7 +117,7 @@ textarea#body{
     .panel{
         position:relative;
         height: 99%;
-        top: -8.3%;
+        top: 1%;
         flex-shrink:0;
     }
 
@@ -175,3 +135,4 @@ textarea#body{
 @media(max-width:450px) {
 
 }
+

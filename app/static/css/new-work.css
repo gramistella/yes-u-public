@@ -5,10 +5,9 @@
 
 #edit-form{
     position: relative;
-    bottom: 10%;
 }
 #edit-form > form{
-    bottom: 125px;
+    top: -90px;
 }
 ul.errors > li {
     list-style: none;
@@ -19,12 +18,12 @@ ul.errors > li {
 }
 
 footer {
-    bottom: -45vh;
+   bottom: -15vh;
     margin: unset;
 }
 
 .media-panel{
-    bottom:10px;
+    bottom:25px;
 }
 
 #media-panel-title{
@@ -32,4 +31,41 @@ footer {
     position: absolute;
     left: 0;
     right: 0;
+}
+
+#media-tip{
+    padding:unset;
+    top: 70px;
+}
+
+.lds-ring {
+
+    position: absolute;
+    margin: auto;
+    left: -46px;
+    right: 0;
+    width: 10px;
+    bottom: 4px;
+    z-index: 1;
+
+}
+
+@media (max-width:1000px) {
+    footer{
+        bottom: 0px;
+        position: fixed;
+    }
+
+}
+
+@media (max-width:768px) {
+    .container{
+        height: 800px;
+    }
+
+    .panel{
+        height: 90%;
+        top: 0%;
+    }
+
 }

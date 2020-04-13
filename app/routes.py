@@ -6,12 +6,28 @@ from app.forms import LoginForm, WorkForm
 from app.models import Schools, Media, Work
 from flask_login import current_user, login_user, logout_user, login_required, AnonymousUserMixin
 from flask_cors import CORS
+from werkzeug.utils import secure_filename
+from contextlib import contextmanager
+from sqlalchemy.orm import exc as sqlalchemy_exc
 
 CORS(app)
 
 max_characters_allowed_bio = 190
 max_characters_allowed_work_title = 50
 max_characters_allowed_work_desc = 350
+
+@contextmanager
+def session_scope():
+    """Provide a transactional scope around a series of operations."""
+    session = db.Session()
+    try:
+        yield session
+        session.commit()
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()
 
 @app.route('/')
 def index():
@@ -25,7 +41,7 @@ def page_not_found(error):
 
 
 @app.errorhandler(500)
-def page_not_found(error):
+def server_error(error):
     return render_template('/errors/500.html')
 
 
@@ -39,10 +55,10 @@ def get_author_from_id(author_id):
 
 
 def true_if_owner(obj, author):
-    ownership = 0
+    ownership = False
     try:
         if obj.author_id == author.id:
-            ownership = 1
+            ownership = True
     except AttributeError:
         print('Attribute error in is_owner()', file=sys.stdout)
     return ownership
@@ -128,6 +144,30 @@ def school_italy():
     return populate_school_template(italy)
 
 
+@app.route('/schools/Regionale-Scholengemeenschap-t-Rijks')
+def school_netherlands():
+    netherlands = Schools.query.filter_by(country='The Netherlands').first()
+    return populate_school_template(netherlands)
+
+
+@app.route('/schools/Arsakeio-Tositseio-Lykeio-Ekalis')
+def school_greece():
+    greece = Schools.query.filter_by(country='Greece').first()
+    return populate_school_template(greece)
+
+
+@app.route('/schools/Lycee-Vauban')
+def school_france():
+    france = Schools.query.filter_by(country='France').first()
+    return populate_school_template(france)
+
+
+@app.route('/schools/Gimnazija-Kran')
+def school_slovenia():
+    slovenia = Schools.query.filter_by(country='Slovenia').first()
+    return populate_school_template(slovenia)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -135,8 +175,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = Schools.query.filter_by(username=form.username.data).first()
-        if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
+        if user is None or not user.validate_password(form.password.data):
             return redirect(url_for('login'))
 
         login_user(user, remember=form.remember_me.data)
@@ -161,12 +200,11 @@ def handle_request():
             if request_type == 1:
                 author_media = Media.query.filter_by(author_id=current_user.id).all()
                 img_urls = []
+                img_ids = []
                 for media in author_media:
                     img_urls.append(media.path[5:])
-                    print(media.path[5:], file=sys.stdout)
-                return jsonify(img_urls)
-            elif request_type == 2:
-                latest_work = db.session.query(Work).filter(Work.id == db.session.query(db.func.max(Work.id)))
+                    img_ids.append(media.id)
+                return jsonify({'ids': img_ids, 'urls': img_urls})
             else:
                 return '', 404
         else:
@@ -178,14 +216,14 @@ def handle_request():
         print('[ POST type = {} ]'.format(request_type), file=sys.stdout)
         # Edit school description
         if request_type == 1:
-            description = content['description']
+            description = content['description'].strip()
             description = (description[:max_characters_allowed_bio]) \
                 if len(description) > max_characters_allowed_bio else description
 
             if current_user.description.split() != description.split():
                 current_user.description = description
-                #print(len(description), file=sys.stdout)
                 db.session.commit()
+                print(current_user.description + '\n + \n' + description, file=sys.stdout)
             return '', 204
         elif request_type == 2:
             image = request.files['image']
@@ -197,19 +235,21 @@ def handle_request():
         elif request_type == 3:
             work_id = content['work_id']
             selected_work = Work.query.get_or_404(work_id)
-            title = content['title']
+            title = content['title'].strip()
             title = (title[:max_characters_allowed_work_title]) \
                 if len(title) > max_characters_allowed_work_title else title
-            description = content['description']
+            description = content['description'].strip()
             description = (description[:max_characters_allowed_work_desc]) \
                 if len(description) > max_characters_allowed_work_desc else description
             attached_media = content['attached_media']
             id_list = []
-
+            print(attached_media, file=sys.stdout)
             for media in attached_media:
-                path = media[25:]
-
-                id_list.append(str(Media.query.filter(Media.path.contains(path)).first().id))
+                try:
+                    path = media[25:]
+                    id_list.append(str(Media.query.filter(Media.path.contains(path)).first().id))
+                except TypeError:
+                    pass
             id_list = ','.join(id_list)
             description = (description[:max_characters_allowed_bio]) \
                 if len(description) > max_characters_allowed_bio else description
@@ -221,68 +261,118 @@ def handle_request():
                 selected_work.attached_media = id_list
                 db.session.commit()
 
-
-
     return '', 204
 
 
 @app.route('/upload', methods=['POST'])
 @login_required
 def upload_handler():
-    media = request.files['media']
-    filename = media.filename
+    file = request.files['file']
+
+    # Making the filename unique
+    filename = file.filename.split('.')[0] + '_' + str(current_user.id) + '.' + file.filename.split('.')[1]
+
     ret = allowed_media(filename)
     upload_flag = ret[0]
-    #print(upload_flag, file=sys.stdout)
     media_type = ret[1]
+
     if upload_flag:
-        image_path = os.path.join(app.config["IMAGE_UPLOADS"], filename)
-        new_media = Media(
-            author_id=current_user.id,
-            path=image_path,
-            type=media_type
-        )
-        db.session.add(new_media)
-        db.session.commit()
-        media.save(image_path)
-    return '', 204
+        save_path = os.path.join(app.config["MEDIA_UPLOADS"], secure_filename(filename))
+        current_chunk = int(request.form['dzchunkindex'])
+        # If the file already exists it's ok if we are appending to it,
+        # but not if it's new file that would overwrite the existing one
+
+        if os.path.exists(save_path) and current_chunk == 0:
+            return make_response(('You already uploaded this file', 400))
+
+        try:
+            with open(save_path, 'ab') as f:
+                f.seek(int(request.form['dzchunkbyteoffset']))
+                f.write(file.stream.read())
+        except OSError:
+            # log.exception will include the traceback so we can see what's wrong
+            #log.exception('Could not write to file')
+            return make_response(("Not sure why,"
+                                  " but we couldn't write the file to disk", 500))
+
+        total_chunks = int(request.form['dztotalchunkcount'])
+        if current_chunk + 1 == total_chunks:
+            # This was the last chunk, the file should be complete and the size we expect
+            if os.path.getsize(save_path) != int(request.form['dztotalfilesize']):
+                #log.error(f"File {file.filename} was completed, "
+                          #f"but has a size mismatch."
+                          #f"Was {os.path.getsize(save_path)} but we"
+                          #f" expected {request.form['dztotalfilesize']} ")
+                return make_response(('Size mismatch', 500))
+            else:
+                #log.info(f'File {file.filename} has been uploaded successfully')
+                new_media = Media(
+                    author_id=current_user.id,
+                    path=save_path,
+                    type=media_type
+                )
+                db.session.add(new_media)
+                db.session.commit()
+    else:
+        return make_response(("Invalid filetype supplied.", 500))
+    return make_response(("Upload successful", 200))
 
 
 def allowed_media(filename):
+
+    response_bool = None
+    response_filetype = None
     if '.' not in filename:
-        return False
+        response_bool = False
+    if response_bool is None:
+        ext = filename.rsplit('.', 1)[1]
 
-    ext = filename.rsplit('.', 1)[1]
-
-    if ext.upper() in app.config['ALLOWED_IMAGE_EXTENSIONS']:
-        return [True, 1]
-    elif ext.upper() in app.config['ALLOWED_VIDEO_EXTENSIONS']:
-        return [True, 2]
-    else:
-        return False
+        if ext.upper() in app.config['ALLOWED_IMAGE_EXTENSIONS']:
+            response_filetype = 1
+            response_bool = True
+        elif ext.upper() in app.config['ALLOWED_VIDEO_EXTENSIONS']:
+            response_filetype = 2
+            response_bool = True
+        elif ext.upper() in app.config['ALLOWED_PDF_EXTENSIONS']:
+            response_filetype = 3
+            response_bool = True
+        else:
+            response_bool = False
+    return [response_bool, response_filetype]
 
 
 @app.route('/works/<work_id>', methods=('GET', 'POST'))
 def user_work(work_id):
-    current_work = Work.query.get_or_404(work_id)
-    is_owner = true_if_owner(current_work, current_user)
-    media_list = []
-    attached_media = []
-    try:
-        attached_media = current_work.attached_media.split(',')
-    except AttributeError:
-        pass
-    for media_id in attached_media:
-        media_list.append(Media.query.get_or_404(media_id))
+    current_work = Work.query.filter_by(id=work_id).first()
+    if current_work is not None:
+        is_owner = true_if_owner(current_work, current_user)
+        media_list = []
+        attached_media = []
+        attached_media_new = []
 
-    form = WorkForm()
+        try:
+            attached_media = current_work.attached_media.split(',')
+        except AttributeError:
+            pass
+        for idx, media_id in enumerate(attached_media):
+            if Media.query.filter_by(id=media_id).scalar() is not None:
+                attached_media_new.append(str(media_id))
+                media_list.append(Media.query.filter_by(id=media_id).one())
 
-    return render_template(
-        '/works/work.html',
-        work=current_work,
-        is_owner=is_owner,
-        form=form,
-        media_list=media_list)
+        if attached_media_new != attached_media:
+            current_work.attached_media = ','.join(attached_media_new)
+            db.session.commit()
+
+        form = WorkForm()
+
+        return render_template(
+            '/works/work.html',
+            work=current_work,
+            is_owner=is_owner,
+            form=form,
+            media_list=media_list)
+    else:
+        abort(404)
 
 @app.route('/works/new-work', methods=('GET', 'POST'))
 @login_required
@@ -292,12 +382,12 @@ def new_work():
     if request.method == 'POST':
 
         content = request.get_json()
-        title = content['title']
+        title = content['title'].strip()
         title = (title[:max_characters_allowed_work_title]) \
             if len(title) > max_characters_allowed_work_title else title
-        description = content['description']
+        description = content['description'].strip()
         description = (description[:max_characters_allowed_work_desc]) \
-            if len(title) > max_characters_allowed_work_desc else title
+            if len(description) > max_characters_allowed_work_desc else description
         attached_media = content['attached_media']
         id_list = []
         for media in attached_media:
@@ -327,5 +417,28 @@ def delete_work():
     if true_if_owner(work, current_user):
         db.session.delete(work)
         db.session.commit()
+
+    return '', 204
+
+@app.route('/media/delete', methods=['POST'])
+@login_required
+def delete_media():
+    media_id = request.get_json()["media_id"]
+    media = None
+    try:
+        media = Media.query.filter_by(id=media_id).one()
+    except sqlalchemy_exc.NoResultFound:
+        pass
+    except Exception:
+        raise
+    if true_if_owner(media, current_user):
+        db.session.delete(media)
+        db.session.commit()
+        try:
+            os.remove(media.path)
+        except FileNotFoundError:
+            pass
+        except Exception:
+            raise
 
     return '', 204

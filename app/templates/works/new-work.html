@@ -7,14 +7,12 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/basic.min.css"/>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/navigation.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/school-template.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/work-template.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/new-work.css') }}">
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.css"/>
-
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/slick-theme.css') }}"/>
 
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <title>Yes-U! - New Work</title>
@@ -74,29 +72,29 @@
 
             <div id="work">
 
-            <div id="edit-form" >
-                 <form method="POST" style="width:97%">
-                    <div class="form-field" id="form-title" style="padding-bottom:25px">{{ form.title.label }} {{ form.title }}
-                      {% if form.title.errors %}
-                        <ul class="errors">
-                          {% for error in form.title.errors %}
-                            <li>{{ error }}</li>
-                          {% endfor %}
-                        </ul>
-                      {% endif %}
-                    </div>
-                    <div class="form-field" id="form-description">{{ form.body.label }} {{ form.body }}
-                      {% if form.body.errors %}
-                        <ul class="errors">
-                          {% for error in form.body.errors %}
-                            <li>{{ error }}</li>
-                          {% endfor %}
-                        </ul>
-                      {% endif %}
-                    </div>
-                    {{ form.submit }} {{ form.csrf_token }}
-                  </form>
-            </div>
+                <div id="edit-form" >
+                     <form method="POST" style="width:97%">
+                        <div class="form-field" id="form-title" style="padding-bottom:25px">{{ form.title.label }} {{ form.title }}
+                          {% if form.title.errors %}
+                            <ul class="errors">
+                              {% for error in form.title.errors %}
+                                <li>{{ error }}</li>
+                              {% endfor %}
+                            </ul>
+                          {% endif %}
+                        </div>
+                        <div class="form-field" id="form-description">{{ form.body.label }} {{ form.body }}
+                          {% if form.body.errors %}
+                            <ul class="errors">
+                              {% for error in form.body.errors %}
+                                <li>{{ error }}</li>
+                              {% endfor %}
+                            </ul>
+                          {% endif %}
+                        </div>
+                        {{ form.submit }} {{ form.csrf_token }}
+                      </form>
+                </div>
                 <div class="hidden" id="zoom-media">
                 <a id="zoom-close"></a>
                 <img id="zoom-img" src="">
@@ -104,55 +102,54 @@
                       <source src="" type="video/mp4">
                       Your browser does not support HTML5 video.
                     </video>
+                <a id="zoom-pdf" href=""></a>
+                {% if is_school_owner %}
+                <a class="button delete" style="display:flex; width:133px;position:absolute;color:white;bottom:50px;left:0;right:0" onclick="">Delete Media</a>
+                {% endif %}
             </div>
-                <div class="media-panel">
+                <div class="hidden" id="upload-form">
+                    <a id="upload-form-close" onclick="uploadMedia();"></a>
+                    <button type="button" class="collapsible">What are the supported filetypes?</button>
+                    <div class="collapsible-content">
+                    <p>Currently, the supported filetypes are: JPEG (JPG), PNG, MP4 (H.264) and PDF</p>
+                    </div>
+                    <form class="dropzone dz-clickable" id="dropper"></form>
+                </div>
+            <div class="media-panel">
 
                 <div style="display:inline-block;height:75px">
 
-                <h4 id="media-panel-title">
-                    All media files:
-                </h4>
-                    <p id="media-tip"></p>
+                    <h4 id="media-panel-title">
+                        All media files:
+                    </h4>
+                        <p id="media-tip"></p>
 
-                <a class="button" id="attach-button" style="color:white;text-decoration:none;position:absolute;top: 17px;" onclick="editMedia()">Attach files</a>
-                <form id="upload-form" action="/work/upload" method="POST" enctype="multipart/form-data" style="display:flex; width:300px; float:right;top:-80%;position:relative;">
+                    <a class="button" id="attach-button" style="color:white;text-decoration:none;position:absolute;top: 17px;" onclick="editMedia()">Attach files</a>
+                    <a id="upload-button" class="button" style="display:flex; width:90px;right: 25px;top:17px;position: absolute;color:white;" onclick="uploadMedia();">Upload</a>
 
-                    <div class="form-group">
-                      <div class="custom-file">
-                        <label class="custom-file-label" for="media" id="media-label">Select image...</label>
-                          <input type="file" class="custom-file-input" name="media" id="media">
-                      </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary img-upload-button">Upload</button>
-
-                </form>
-
-                    </div>
-                <div id="media-slider">
-
+                </div>
+                <div id="media-slider" class="media-slider">
                 </div>
 
             </div>
+                <div id="loading-spinner" class="lds-ring"><div></div><div></div><div></div><div></div></div>
                 <a class="button" id="submit-button" style="color:white;text-decoration:none;position:absolute;bottom:-40px;left:0;right:0;width:128px;" onclick="submitWork()">Submit work</a>
         </div>
     </div>
+        </div>
     <footer>
         <div>
             Made with ♥ by Giovanni Ramistella | Liceo Galileo Galilei, CT
         </div>
 
     </footer>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    <script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
-    {% if is_school_owner %}
-    <script src="{{ url_for('static', filename='js/your-page.js') }}"></script>
-    {% endif %}
-
-    <script src="{{ url_for('static', filename='js/new_work.js') }}"></script>
+    <script type="application/javascript" src="{{ url_for('static', filename='libs/jquery3.4.1.min.js') }}"></script>
+    <script type="application/javascript" src="{{ url_for('static', filename='libs/dropzone5.4.0.min.js') }}"></script>
+    <script type="application/javascript" src="{{ url_for('static', filename='libs/media.js') }}"></script>
+    <script type="application/javascript" src="{{ url_for('static', filename='js/navigation.js') }}"></script>
+    <script type="application/javascript" src="{{ url_for('static', filename='js/utils.js') }}"></script>
+    <script type="application/javascript" src="{{ url_for('static', filename='js/new_work.js') }}"></script>
 
 </body>
 </html>

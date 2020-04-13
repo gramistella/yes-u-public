@@ -210,27 +210,87 @@ h1.mobile {
   transform: rotate(-45deg);
 }
 
+#upload-form-close {
+  position: absolute;
+  right: 5%;
+  top: 5%;
+  width: 32px;
+  height: 32px;
+  opacity: 1;
+}
+#upload-form-close:hover {
+  opacity: 0.5;
+}
+#upload-form-close:before, #upload-form-close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  background-color: white;
+}
+#upload-form-close:before {
+  transform: rotate(45deg);
+}
+#upload-form-close:after {
+  transform: rotate(-45deg);
+}
+
+.media-remove-button {
+  position: absolute;
+  right: 0px;
+  top: -3px;
+  width: 32px;
+  height: 32px;
+  opacity: 1;
+  z-index: 10;
+
+}
+.media-remove-button:hover:before {
+     color:white;
+    -webkit-text-stroke: .8px black;
+}
+.media-remove-button:before {
+  content: 'x';
+  color: red;
+  font-weight: 300;
+  font-family: Arial, sans-serif;
+  font-size: 34px;
+  bottom: 10px;
+  left: 8px;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  -webkit-text-stroke: .8px darkred;
+
+}
+
+
 #confirmation-dialog-container{
     display:none;
     position: fixed;
     width: 100vw;
     height: 200vh;
     background-color: rgba(0,0,0,0.5);
-    z-index: 10;
+    z-index: 11;
 }
 
 .confirmation-dialog{
     position: fixed;
     width: 30%;
     height: 20%;
-    left: 33vw;
+    left: 0;
+    right: 0;
     top: 40vh;
-    background-color:rgba(230,230,230,1);
+    margin: 0 auto;
+    background-color: whitesmoke;
     z-index: 10;
     align-content: center;
     align-items: center;
     display:flex;
     flex-direction:column;
+    border-radius: 5px;
 }
 
 .confirmation-dialog > h5{
@@ -244,6 +304,86 @@ h1.mobile {
 .confirmation-dialog-buttons > a{
     margin: 10px 10px;
 }
+
+#confirmation-info  {
+    align-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+
+.collapsible {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 12px;
+    width: 60%;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    position: fixed;
+    top: 80px;
+}
+
+.active, .collapsible:hover {
+  background-color: #ccc;
+}
+
+.collapsible-content {
+  padding: 10px 12px;
+  width: 60%;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+  margin: 0 auto;
+  margin-top: 128px;
+  position: fixed;
+  left: 0;
+  right: 0;
+
+}
+
+.lds-ring {
+
+  position: absolute;
+  margin-top: 70px;
+  margin-right: 43px;
+  display: none;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  margin: 8px;
+  border: 5.5px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #82cfff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 
 @media (min-width:769px){
     .nav-window{

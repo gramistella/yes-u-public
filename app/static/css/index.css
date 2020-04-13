@@ -6,6 +6,9 @@ div.content {
     margin:20px;
 }
 
+footer{
+    padding-top: 50px;
+}
 div.content > div.img {
     background-position: center;
     height: 450px;
@@ -68,7 +71,8 @@ h5 {
 
 .slide-content{
     display:flex;
-
+    position:absolute;
+    width: 100%;
 }
 
 .slide-img{
@@ -119,6 +123,9 @@ h5 {
         border-radius: unset;
     }
 
+    div.content {
+        margin:0px;
+    }
 
 
     .logo{
@@ -141,6 +148,8 @@ h5 {
     .desktop-paragraph{
         display:none;
     }
+
+
 }
 @media(max-width:400px){
     
@@ -158,6 +167,7 @@ h5 {
   align-content: center;
   align-items: center;
   height: 400px;
+  padding-bottom: 40px;
 }
 
 /* Slides */
@@ -200,7 +210,7 @@ h5 {
   text-align: center;
     padding-bottom: 20px;
 position: relative;
-bottom: 30px;
+bottom: 25px;
 }
 
 /* The dots/bullets/indicators */
@@ -230,8 +240,6 @@ q {font-style: italic;}
 /* Add a blue color to the author */
 .author {
     color: cornflowerblue;
-    text-align: center;
-    top: 85%;
     position: relative; 
 }
 

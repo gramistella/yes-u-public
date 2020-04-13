@@ -6,7 +6,7 @@
     text-align:center;
     position:relative;
     padding-top: 15px;
-    padding-bottom: 10px;
+    padding-bottom: 50px;
     min-width:333px;
 }
 
@@ -27,8 +27,14 @@ footer {
     z-index: -1;
 }
 
+.lds-ring {
+    margin: unset;
+    left: 44.5%;
+    bottom: 20%;
+}
+
 @media (max-width:768px) {
     .login-panel{
-    top:100px;
+        top:100px;
     }
 }

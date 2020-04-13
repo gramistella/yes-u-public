@@ -6,7 +6,7 @@ div.school-space {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100px;
+    height: 110px;
     margin: 3em 8em;
     background-color: antiquewhite;
     position: relative;
@@ -64,7 +64,6 @@ footer{
 #description-area{
     max-width: 100%;
     overflow-wrap: break-word;
-    -webkit-line-clamp: N;
 }
 
 :root {
@@ -90,7 +89,8 @@ footer{
     height:102px;
     display:none;
     resize:none;
-
+    margin-top: 0;
+    margin-bottom: 0.9rem;
 }
 
 .media-panel {
@@ -108,18 +108,32 @@ footer{
         grid-column: 1 / -1;
     }
 
-.media {
+.media-slider {
     display: grid;
-    grid-gap: calc(var(--gutter) / 2);
+    grid-gap: 30px;
     grid-auto-flow: column;
-    grid-template-rows: minmax(150px, 1fr);
+    grid-auto-columns: max-content;
     overflow-x: auto;
     scrollbar-color: lightgray white;
     padding-bottom: calc(.75 * var(--gutter));
     margin-bottom: calc(-.25 * var(--gutter));
+    padding-top: 10px;
+    min-height: 150px;
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    justify-content: safe center;
 }
-
-
+.media-play-button{
+    position: absolute;
+    width: 80px;
+}
+.dropzone {
+    text-align:center;
+}
 #zoom-media{
     position: fixed; /* Sit on top of the page content */
     width: 100%; /* Full width (cover the whole page) */
@@ -129,10 +143,36 @@ footer{
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.8); /* Black background with opacity */
-    z-index: 10; /* Specify a stack order in case you're using a different order for other elements */
+    z-index: 20; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
     align-content: center;
     align-items: center;
+}
+
+#upload-form{
+    position: fixed; /* Sit on top of the page content */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.8); /* Black background with opacity */
+    z-index: 11; /* Specify a stack order in case you're using a different order for other elements */
+    text-align:center;
+}
+
+#upload-form > form {
+    cursor: pointer;
+    left: 0;
+    right: 0;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 21vh;
+    width: 60vw;
+    height: 60vh;
+
 }
 
 #zoom-img{
@@ -143,6 +183,16 @@ footer{
     object-fit: contain;
 }
 
+#zoom-pdf{
+    width: 75% !important;
+    transform: translateX(16.5%);
+    max-height: 90%;
+    object-fit: contain;
+}
+
+#zoom-pdf > iframe {
+    width: 100% !important;
+}
 #zoom-video{
     width:75%;
     right: 50%;
@@ -150,7 +200,7 @@ footer{
     max-height: 90%;
     object-fit: contain;
 }
-.media > div{
+.media-slider > div{
     object-fit:contain;
     overflow:hidden;
 }
@@ -179,16 +229,29 @@ footer{
     top:-3%
 }
 
-.media > div, .item {
+.single-media{
+    max-width:100%;
+    max-height:100%;
+    display: block;
+    margin: 0 auto;
+
+}
+
+.pdf-container{
+    height: 105px;
+    text-align: center;
+
+}
+
+.media-slider > div, .item {
     scroll-snap-align: center;
     padding: calc(30px / 10 * 1.5);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #5073B3;
     height:150px;
-    width:300px;
+    position: relative;
 }
 .work-table {
     margin-left: auto;
@@ -315,9 +378,7 @@ h6{
         width:90%;
     }
 
-    .media{
-        grid-template-columns: repeat(5, calc(50% - var(--gutter) * 2));
-    }
+
 }
 
 @media (max-width:768px) {
@@ -327,7 +388,7 @@ h6{
     }
     .panel{
         width: 107%;
-        bottom: -8%;
+        bottom: -9%;
         border-radius: 0px;
     }
 
@@ -337,6 +398,14 @@ h6{
     .footer{
         padding-top: 1px !important;
     }
+    .work-cell{
+        height: 150px;
+    }
+
+    #zoom-pdf{
+        width: 100% !important;
+        transform: none;
+    }
 }
 
 @media(max-width:450px) {
@@ -345,5 +414,3 @@ h6{
 
     }
 }
-
-

@@ -10,7 +10,9 @@ class Config(object):
     MYSQL_DB = '***REMOVED***'
 
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://' + MYSQL_USER + ':' + MYSQL_PASSWORD + '@' + MYSQL_HOST + '/' + MYSQL_DB
+    SQLALCHEMY_POOL_RECYCLE = 120
 
-    IMAGE_UPLOADS = '.\\app\\static\\user_uploads'
+    MEDIA_UPLOADS = '.\\app\\static\\user_uploads'
     ALLOWED_IMAGE_EXTENSIONS = ['JPEG', 'JPG', 'PNG']
     ALLOWED_VIDEO_EXTENSIONS = ['MP4']
+    ALLOWED_PDF_EXTENSIONS = ['PDF']

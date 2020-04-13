@@ -71,16 +71,12 @@
                         {% for work in works %}
                         <div class="work-cell">
                             <div style="display:flex;width:100%;justify-content:center;">
-                                <h5 class="cell-headers author" style="padding: 0 15px;position: absolute;left: 30px;"> {{ get_author_from_id(work.author_id) }} </h5>
-                                <h5 class="cell-headers title" style="padding: 0 15px;position:absolute;text-align:center;"> {{ work.title }} </h5>
-                                <h5 class="cell-headers upload" style="padding: 0 15px;position:absolute;"> {{ work.upload_date.strftime('%d/%m/%Y') }} </h5>
+                                <h5 class="cell-headers author" style="padding: 0 15px;position: absolute;left: 30px;">{{ get_author_from_id(work.author_id) }}</h5>
+                                <h5 class="cell-headers title" style="padding: 0 15px;position:absolute;text-align:center;">{{ work.title }}</h5>
+                                <h5 class="cell-headers upload" style="padding: 0 15px;position:absolute;">{{ work.upload_date.strftime('%d/%m/%Y') }}</h5>
                             </div>
-                            <h6 style="position:relative;top:100px;text-align:center;">
-
-                                {{ work.description }}
-
-                            </h6>
-                             <a class="button" style="position:relative;top:20%;" href="{{ url_for('user_work', work_id=work.id) }}">View</a>
+                            <h6 style="position:relative;top:43px;text-align:center;overflow-wrap:break-word;white-space:pre-line;height:100px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient: vertical;">{{ work.description }}</h6>
+                             <a class="button" style="position:relative;top:20%;margin-top:8px;" href="{{ url_for('user_work', work_id=work.id) }}">View</a>
                         </div>
                         {% endfor %}
 
