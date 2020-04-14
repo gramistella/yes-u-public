@@ -26,19 +26,11 @@ $(function() {
         chunkSize: 1000000, // bytes
 
         totaluploadprogress: function(file, progress, bytesSent) {
-            console.log(progress);
+            console.log(bytesSent);
             //$(".dz-progress > dz-upload").style.width = progress + "%";
         }
     });
 });
-
-$('#dropper').on("totaluploadprogress", function(progress) {
-    console.log(progress);
-    if ($(".dz-progress > dz-upload").style.width <= progress){
-        $(".dz-progress > dz-upload").style.width = progress + "%";
-    }
-});
-
 
 (function () {
     var a = document.getElementById("description-input"),
