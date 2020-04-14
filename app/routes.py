@@ -23,12 +23,12 @@ def index():
 
 
 @app.errorhandler(404)
-def page_not_found():
+def page_not_found(error):
     return render_template('/errors/404.html')
 
 
 @app.errorhandler(500)
-def server_error():
+def server_error(error):
     return render_template('/errors/500.html')
 
 
@@ -272,26 +272,32 @@ def upload_handler():
     media_type = ret[1]
 
     if upload_flag:
-        save_path = os.path.join(app.config["MEDIA_UPLOADS"], secure_filename(filename))
+        save_path = os.path.join(app.config["MEDIA_UPLOADS"], secure_filename(filename)).replace('\\', '/')
         current_chunk = int(request.form['dzchunkindex'])
+        total_chunks = int(request.form['dztotalchunkcount'])
+        upload_size = int(request.form['dztotalfilesize'])
 
         # If the file already exists it's ok if we are appending to it,
         # but not if it's new file that would overwrite the existing one
         if os.path.exists(save_path) and current_chunk == 0:
-            return make_response(('You already uploaded this file', 400))
+
+            local_size = os.stat(save_path).st_size
+            if upload_size > local_size:
+                os.remove(save_path)
+                return make_response(('Detected an interrupted upload. Please try again', 500))
+            else:
+                return make_response(('You already uploaded this file', 400))
 
         try:
             with open(save_path, 'ab') as f:
                 f.seek(int(request.form['dzchunkbyteoffset']))
                 f.write(file.stream.read())
         except OSError:
-            raise
             return make_response(("Couldn't write file to disk. Please try again later.", 500))
 
-        total_chunks = int(request.form['dztotalchunkcount'])
         if current_chunk + 1 == total_chunks:
             # This was the last chunk, the file should be complete and the size we expect
-            if os.path.getsize(save_path) != int(request.form['dztotalfilesize']):
+            if os.path.getsize(save_path) != upload_size:
 
                 return make_response(('Size mismatch. Please try again.', 500))
             else:

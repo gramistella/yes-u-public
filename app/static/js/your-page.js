@@ -23,12 +23,20 @@ $(function() {
         url: '/upload',
         method: 'post',
         maxFilesize: 1025, // megabytes
-        chunkSize: 1000000 // bytes
+        chunkSize: 1000000, // bytes
+
+        totaluploadprogress: function(file, progress, bytesSent) {
+            console.log(progress);
+            //$(".dz-progress > dz-upload").style.width = progress + "%";
+        }
     });
 });
 
 $('#dropper').on("totaluploadprogress", function(progress) {
-  $(".dz-progress > dz-upload").style.width = progress + "%";
+    console.log(progress);
+    if ($(".dz-progress > dz-upload").style.width <= progress){
+        $(".dz-progress > dz-upload").style.width = progress + "%";
+    }
 });
 
 
