@@ -15,6 +15,7 @@ window.addEventListener("drop",function(e){
 },false);
 
 Dropzone.autoDiscover = false;
+MB_CONST = 2^20;
 $(function() {
     $('#dropper').dropzone({
         paramName: 'file',
@@ -23,11 +24,11 @@ $(function() {
         url: '/upload',
         method: 'post',
         maxFilesize: 1025, // megabytes
-        chunkSize: 1000000, // bytes
+        chunkSize: 3000000, // bytes
+        timeout: 180000,
 
-        totaluploadprogress: function(file, progress, bytesSent) {
-            console.log(bytesSent);
-            //$(".dz-progress > dz-upload").style.width = progress + "%";
+        uploadprogress: function(file, progress, bytesSent) {
+            console.log(bytesToSize(bytesSent));
         }
     });
 });
