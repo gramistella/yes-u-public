@@ -1,13 +1,12 @@
-from flask import render_template, flash, url_for, redirect, request, send_from_directory, abort, escape, make_response, jsonify
-from app import app, db, models
+from flask import render_template, url_for, redirect, request, send_from_directory, abort, make_response, jsonify
+from app import app, db
 import os
 import sys
 from app.forms import LoginForm, WorkForm
 from app.models import Schools, Media, Work
-from flask_login import current_user, login_user, logout_user, login_required, AnonymousUserMixin
+from flask_login import current_user, login_user, logout_user, login_required
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
-from contextlib import contextmanager
 from sqlalchemy.orm import exc as sqlalchemy_exc
 
 CORS(app)
@@ -16,18 +15,6 @@ max_characters_allowed_bio = 190
 max_characters_allowed_work_title = 50
 max_characters_allowed_work_desc = 350
 
-@contextmanager
-def session_scope():
-    """Provide a transactional scope around a series of operations."""
-    session = db.Session()
-    try:
-        yield session
-        session.commit()
-    except:
-        session.rollback()
-        raise
-    finally:
-        session.close()
 
 @app.route('/')
 def index():
@@ -36,12 +23,12 @@ def index():
 
 
 @app.errorhandler(404)
-def page_not_found(error):
+def page_not_found():
     return render_template('/errors/404.html')
 
 
 @app.errorhandler(500)
-def server_error(error):
+def server_error():
     return render_template('/errors/500.html')
 
 
@@ -72,7 +59,7 @@ def _jinja2_filter_datetime(date, fmt=None):
 
     date = date.format()
     native = date.replace(tzinfo=None)
-    format_string ='%b %d, %Y'
+    format_string = '%b %d, %Y'
     return native.strftime(format_string)
 
 
@@ -92,7 +79,6 @@ def favicon():
             'static'),
         'favicon.ico',
         mimetype='image/vnd.microsoft.ico')
-
 
 
 @app.route('/schools/user-page')
@@ -270,14 +256,14 @@ def upload_handler():
     file = request.files['file']
 
     # Making the filename unique
-    n_occurences = file.filename.count('.')
+    n_occurrences = file.filename.count('.')
     split_filename = file.filename.split('.')
     filename = ''
-    if n_occurences:
-        for i in range(n_occurences + 1):
+    if n_occurrences:
+        for i in range(n_occurrences + 1):
             string = split_filename[i]
             # This is the true extension
-            if i == n_occurences:
+            if i == n_occurrences:
                 filename += str(current_user.id) + '.' + string
             else:
                 filename += string + '_'
@@ -289,9 +275,9 @@ def upload_handler():
     if upload_flag:
         save_path = os.path.join(app.config["MEDIA_UPLOADS"], secure_filename(filename))
         current_chunk = int(request.form['dzchunkindex'])
+
         # If the file already exists it's ok if we are appending to it,
         # but not if it's new file that would overwrite the existing one
-
         if os.path.exists(save_path) and current_chunk == 0:
             return make_response(('You already uploaded this file', 400))
 
@@ -300,22 +286,16 @@ def upload_handler():
                 f.seek(int(request.form['dzchunkbyteoffset']))
                 f.write(file.stream.read())
         except OSError:
-            # log.exception will include the traceback so we can see what's wrong
-            #log.exception('Could not write to file')
-            return make_response(("Not sure why,"
-                                  " but we couldn't write the file to disk", 500))
+            return make_response(("Couldn't write file to disk. Please try again later.", 500))
 
         total_chunks = int(request.form['dztotalchunkcount'])
         if current_chunk + 1 == total_chunks:
             # This was the last chunk, the file should be complete and the size we expect
             if os.path.getsize(save_path) != int(request.form['dztotalfilesize']):
-                #log.error(f"File {file.filename} was completed, "
-                          #f"but has a size mismatch."
-                          #f"Was {os.path.getsize(save_path)} but we"
-                          #f" expected {request.form['dztotalfilesize']} ")
-                return make_response(('Size mismatch', 500))
+
+                return make_response(('Size mismatch. Please try again.', 500))
             else:
-                #log.info(f'File {file.filename} has been uploaded successfully')
+                # Success
                 new_media = Media(
                     author_id=current_user.id,
                     path=save_path,
@@ -341,7 +321,6 @@ def allowed_media(filename):
         else:
             raise ValueError('Invalid filename supplied in allowed_media, ')
 
-        print('n: ' + str(n_occurrences) + '  ' + filename + ' Wowowow ' + ext.upper(), file=sys.stdout)
         if ext.upper() in app.config['ALLOWED_IMAGE_EXTENSIONS']:
             response_filetype = 1
             response_bool = True
@@ -389,11 +368,11 @@ def user_work(work_id):
     else:
         abort(404)
 
+
 @app.route('/works/new-work', methods=('GET', 'POST'))
 @login_required
 def new_work():
     form = WorkForm()
-    print('wow', file=sys.stdout)
     if request.method == 'POST':
 
         content = request.get_json()
@@ -416,7 +395,7 @@ def new_work():
 
         return jsonify(work.id)
     else:
-        print('wow - 1', file=sys.stdout)
+
         return render_template(
             '/works/new-work.html',
             form=form)
@@ -425,15 +404,14 @@ def new_work():
 @app.route('/works/delete', methods=['POST'])
 @login_required
 def delete_work():
-    print(request.get_json(), file=sys.stdout)
     work_id = request.get_json()["work_id"]
-    print('Work_id: ' + str(work_id), file=sys.stdout)
     work = Work.query.filter_by(id=work_id).one()
     if true_if_owner(work, current_user):
         db.session.delete(work)
         db.session.commit()
 
     return '', 204
+
 
 @app.route('/media/delete', methods=['POST'])
 @login_required

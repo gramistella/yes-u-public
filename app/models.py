@@ -4,6 +4,7 @@ from flask_login import UserMixin
 from werkzeug.security import check_password_hash,generate_password_hash
 from sqlalchemy.exc import StatementError
 
+
 class Schools(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True, index=True)
@@ -24,7 +25,6 @@ class Schools(UserMixin, db.Model):
 
 @login.user_loader
 def load_user(user_id):
-    user = None
     try:
         user = Schools.query.get(int(user_id))
     except StatementError:
