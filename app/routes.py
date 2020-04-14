@@ -5,7 +5,7 @@ import sys
 from app.forms import LoginForm, WorkForm
 from app.models import Schools, Media, Work
 from flask_login import current_user, login_user, logout_user, login_required
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
 from sqlalchemy.orm import exc as sqlalchemy_exc
 
@@ -251,6 +251,7 @@ def handle_request():
 
 @app.route('/upload', methods=['POST'])
 @login_required
+@cross_origin()
 def upload_handler():
     file = request.files['file']
 
