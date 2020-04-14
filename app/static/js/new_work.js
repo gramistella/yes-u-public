@@ -48,7 +48,7 @@ var uploadMedia = function()
         dropperForm.className = 'hidden';
         isUploadFormVisible = 0;
         refreshMedia(false, applySelectionCallback, attached_media);
-        console.log(attached_media);
+        //console.log(attached_media);
         $("body").removeClass("modal-open");
     } else {
         dropperForm.className = '';

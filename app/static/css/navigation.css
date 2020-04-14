@@ -175,8 +175,11 @@ h1.mobile {
 }
 
 .button:hover {
-        opacity: 0.6
-        }
+    box-shadow: 3px 3px 3px gray;
+    transform: scale(1.006, 1.006);
+    color: white;
+}
+
 .icon {
     cursor: pointer;
     position: absolute;

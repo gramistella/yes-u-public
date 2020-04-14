@@ -62,21 +62,13 @@ var refreshMedia = async function(displayControls = false, _callback = null, att
                     html = generate_media_html(ids, urls, i, displayControls);
                     media_slider.insertAdjacentHTML("beforeend", html);
                 }
-                if (_callback != null){
-                    console.log('Dom generation finished.');
-
-                }
             }).then(() => {
                 if (_callback != null){
-
                     if (attached_media != null){
-                        console.log('callback start');
                         _callback(attached_media);
-                        console.log('callback end');
                     } else {
                         console.log('Callback detected but no parameters provided.');
                     }
-
                 }
             });
     });

@@ -270,7 +270,17 @@ def upload_handler():
     file = request.files['file']
 
     # Making the filename unique
-    filename = file.filename.split('.')[0] + '_' + str(current_user.id) + '.' + file.filename.split('.')[1]
+    n_occurences = file.filename.count('.')
+    split_filename = file.filename.split('.')
+    filename = ''
+    if n_occurences:
+        for i in range(n_occurences + 1):
+            string = split_filename[i]
+            # This is the true extension
+            if i == n_occurences:
+                filename += str(current_user.id) + '.' + string
+            else:
+                filename += string + '_'
 
     ret = allowed_media(filename)
     upload_flag = ret[0]
@@ -325,8 +335,13 @@ def allowed_media(filename):
     if '.' not in filename:
         response_bool = False
     if response_bool is None:
-        ext = filename.rsplit('.', 1)[1]
+        n_occurrences = filename.count('.')
+        if n_occurrences == 1:
+            ext = filename.rsplit('.', 1)[1]
+        else:
+            raise ValueError('Invalid filename supplied in allowed_media, ')
 
+        print('n: ' + str(n_occurrences) + '  ' + filename + ' Wowowow ' + ext.upper(), file=sys.stdout)
         if ext.upper() in app.config['ALLOWED_IMAGE_EXTENSIONS']:
             response_filetype = 1
             response_bool = True
@@ -431,7 +446,7 @@ def delete_media():
         pass
     except Exception:
         raise
-    if true_if_owner(media, current_user):
+    if media is not None and true_if_owner(media, current_user):
         db.session.delete(media)
         db.session.commit()
         try:

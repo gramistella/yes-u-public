@@ -3,23 +3,25 @@ attached_media = [];
 
 (function () {
     var a = document.getElementById("body"),
-        limit = 7;//Define max lines limit
+    limit = 7;//Define max lines limit
 
-    function limitLines() {
-        var l = a.value.replace(/\r\n/g, "\n").replace(/\r/g, "").split(/\n/g);//split lines
-        if (l.length > limit) {
-            a.value = l.slice(0, limit).join("\n");
+    if (a != null){
+        function limitLines() {
+            var l = a.value.replace(/\r\n/g, "\n").replace(/\r/g, "").split(/\n/g);//split lines
+            if (l.length > limit) {
+                a.value = l.slice(0, limit).join("\n");
+            }
         }
+
+        function paste() {//onpaste needs timeout
+            setTimeout(limitLines, 1);
+        }
+
+        limitLines(); //Like onload
+
+        a.onkeyup = limitLines;
+        a.onpaste = paste;
     }
-
-    function paste() {//onpaste needs timeout
-        setTimeout(limitLines, 1);
-    }
-
-    limitLines(); //Like onload
-
-    a.onkeyup = limitLines;
-    a.onpaste = paste;
 })();
 
 var editWork = function()
@@ -54,7 +56,7 @@ var editWork = function()
         //console.log(ids);
         ids = [];
         urls = attached_media;
-        console.log(urls);
+        //console.log(urls);
         for (var i=0; i<attached_media.length; i++){
             html = generate_media_html(ids, urls, i, true);
             media_slider_public.insertAdjacentHTML("beforeend", html);
@@ -165,7 +167,7 @@ $(document).on("click","#media-slider > div.selectable", function (event) {
             if (src_img != null && src_img_pdf == null){
                 media_src = src_img;
             } else if (src_video != null){
-                console.log(src_video);
+                //console.log(src_video);
                 media_src = src_video;
             } else if (src_img_pdf != null){
                 pdf_name = event.currentTarget.firstChild.children[1].textContent

@@ -28,9 +28,11 @@ footer {
 }
 
 .lds-ring {
-    margin: unset;
-    left: 44.5%;
-    bottom: 20%;
+    margin: 0 auto;
+    bottom: 55px;
+    width: 57px;
+    left: 0px;
+    right: 0px;
 }
 
 @media (max-width:768px) {
