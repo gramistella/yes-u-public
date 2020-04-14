@@ -62,7 +62,6 @@ def _jinja2_filter_datetime(date, fmt=None):
     format_string = '%b %d, %Y'
     return native.strftime(format_string)
 
-
 @app.route('/works')
 def work_index():
     return render_template(
@@ -286,6 +285,7 @@ def upload_handler():
                 f.seek(int(request.form['dzchunkbyteoffset']))
                 f.write(file.stream.read())
         except OSError:
+            raise
             return make_response(("Couldn't write file to disk. Please try again later.", 500))
 
         total_chunks = int(request.form['dztotalchunkcount'])
