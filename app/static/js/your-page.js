@@ -15,7 +15,6 @@ window.addEventListener("drop",function(e){
 },false);
 
 Dropzone.autoDiscover = false;
-MB_CONST = 2^20;
 $(function() {
     $('#dropper').dropzone({
         paramName: 'file',
@@ -24,14 +23,25 @@ $(function() {
         url: '/upload',
         method: 'post',
         maxFilesize: 1025, // megabytes
-        chunkSize: 3000000, // bytes
+        chunkSize: 2000000, // bytes
         timeout: 180000,
-
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods' : 'POST'
+        },
         uploadprogress: function(file, progress, bytesSent) {
             console.log(bytesToSize(bytesSent));
         }
     });
 });
+
+$('#dropper').on("totaluploadprogress", function(progress) {
+    //console.log(progress);
+    if ($(".dz-progress > dz-upload").style.width <= progress){
+        $(".dz-progress > dz-upload").style.width = progress + "%";
+    }
+});
+
 
 (function () {
     var a = document.getElementById("description-input"),
