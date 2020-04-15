@@ -23,8 +23,8 @@ $(function() {
         url: '/upload',
         method: 'post',
         maxFilesize: 1025, // megabytes
-        chunkSize: 2000000, // bytes
-        timeout: 180000,
+        chunkSize: 1000000, // bytes
+        timeout: 0,
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods' : 'POST'
