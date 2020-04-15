@@ -92,7 +92,11 @@
                 <h4 style="color:white">
                     Attached Media:
                 </h4>
-                    <p class="media-tip" >Click to view the media files</p>
+                    <p id="public-media-tip" class="media-tip" >{% if media_list|length > 0 %}
+                    Click media to open
+                    {% else %}
+                    No media to show
+                    {% endif %}</p>
                     </div>
                 <div id="media-slider-public" class="media-slider">
 

@@ -65,6 +65,11 @@ var editWork = function()
         $('#work').show();
         $('#edit-form').hide();
         $('#form-description > #body').text("");
+        if (attached_media.length == 0){
+            $('#public-media-tip').text("No media to show");
+        } else {
+            $('#public-media-tip').text("Click media to open");
+        }
     } else {
         $('#edit-button').text('Save edits');
         $('#media-tip').text('Click to select the media files to attach');
@@ -98,7 +103,7 @@ var editWork = function()
 
                         } else if (attached_pdf.length != 0){
                             pdf_name = attached_pdf[0].textContent;
-                            pdf_src = '\\static\\user_uploads\\' + pdf_name + '.pdf';
+                            pdf_src = '/static/user_uploads/' + pdf_name + '.pdf';
                             media_to_push = pdf_src;
                         }
                         if (media_to_push != null){
@@ -122,9 +127,14 @@ var editWork = function()
                     while (media_slider_private.firstChild) {
                             media_slider_private.firstChild.remove();
                         }
+
+                    console.log(attached_media);
                     for (var i=0; i < urls.length ;i++){
                         html = generate_media_html(ids, urls, i);
-                        if (attached_media.includes(urls[i])){
+                        replaced_string = urls[i].replace(/\/\//g, "/");
+                        console.log(replaced_string);
+                        console.log(attached_media.includes(replaced_string))
+                        if (attached_media.includes(replaced_string)){
                             //console.log('selected url: ' + urls[i]);
                             html = html.slice(0, 22) + ' selected-media' + html.slice(22);
                         } else {
@@ -171,7 +181,7 @@ $(document).on("click","#media-slider > div.selectable", function (event) {
                 media_src = src_video;
             } else if (src_img_pdf != null){
                 pdf_name = event.currentTarget.firstChild.children[1].textContent
-                pdf_src = '\\static\\user_uploads\\' + pdf_name + '.pdf';
+                pdf_src = '/static/user_uploads/' + pdf_name + '.pdf';
                 media_src = pdf_src;
             }
             if (!attached_media.includes(media_src)){
@@ -192,7 +202,7 @@ $(document).on("click","#media-slider > div.selectable", function (event) {
                 media_src = src_video;
             } else if (src_img_pdf != null){
                 pdf_name = event.currentTarget.firstChild.children[1].textContent
-                pdf_src = '\\static\\user_uploads\\' + pdf_name + '.pdf';
+                pdf_src = '/static/user_uploads/' + pdf_name + '.pdf';
                 media_src = pdf_src;
             }
             if (attached_media.includes(media_src)){
