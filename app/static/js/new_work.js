@@ -37,7 +37,24 @@ $(function() {
         url: '/upload',
         method: 'post',
         maxFilesize: 1025, // megabytes
-        chunkSize: 1000000 // bytes
+        chunkSize: 1000000, // bytes
+        timeout: 0,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods' : 'POST'
+        },
+        uploadprogress: function(file, progress, bytesSent) {
+
+            var width = $(file.previewElement).find('span.dz-upload').width();
+            var parentWidth = $(file.previewElement).find('span.dz-upload').offsetParent().width(); // this will return parent element's width which also can be replaced with docuent to get viewport width
+            var current_percent = Math.round(100*width/parentWidth);
+            var progress_percent = Math.round(100*bytesSent/file.size);
+
+            if (progress_percent > current_percent){
+                $(file.previewElement).find('span.dz-upload').css('width', progress_percent+'%');
+                console.log('Upload @ ' + progress_percent + '%');
+            }
+        }
     });
 });
 

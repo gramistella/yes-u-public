@@ -44,13 +44,6 @@ $(function() {
     });
 });
 
-$('#dropper').on("totaluploadprogress", function(progress) {
-    //console.log(progress);
-    if ($(".dz-progress > dz-upload").style.width <= progress){
-        $(".dz-progress > dz-upload").style.width = progress + "%";
-    }
-});
-
 
 (function () {
     var a = document.getElementById("description-input"),
