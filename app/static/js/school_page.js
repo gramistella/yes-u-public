@@ -14,7 +14,7 @@ $(document).ready(function () {
                 document.getElementById("zoom-media").className = 'hidden';
                 $("body").removeClass("modal-open");
                 if (playing_media != null){
-                    document.getElementById(playing_media).pause()
+                    document.getElementById('zoom-video').pause()
                 }
                 display = 0;
            }
@@ -31,7 +31,7 @@ $(document).ready(function () {
                         $("#zoom-video").show();
                         $("#zoom-img").hide();
                         $("#zoom-pdf").hide();
-                        playing_media = $(this).find('video').attr('id');
+                        playing_media = $(this);
                     } else if (src_img_pdf != null){
                         pdf_name = $(this).find('div').find('p').text();
                         pdf_src = '/static/user_uploads/' + pdf_name + '.pdf';
