@@ -36,8 +36,6 @@ var applySelectionCallback = function(attached_media){
             }
         }
     }
-
-
 }
 
 var refreshMedia = async function(displayControls = false, _callback = null, attached_media = null){
@@ -47,7 +45,6 @@ var refreshMedia = async function(displayControls = false, _callback = null, att
     }
 
     fetch(`/backend?t=1`).then((response) => {
-
         // Convert the response data to JSON
         response.json().then((data) => {
                 ids = data['ids'];
@@ -66,9 +63,6 @@ var refreshMedia = async function(displayControls = false, _callback = null, att
                 }
             });
     });
-
-
-
 }
 
 function bytesToSize(bytes) {

@@ -58,8 +58,7 @@ $(function() {
     });
 });
 
-var uploadMedia = function()
-{
+var uploadMedia = function(){
     var dropperForm = document.getElementById("upload-form");
     if (isUploadFormVisible){
         dropperForm.className = 'hidden';
@@ -78,10 +77,8 @@ attached_media = [];
 isMediaEditable = 0;
 var submitWork = function(){
     if (isMediaEditable == 0) {
-
         title = $('#form-title > #title').val();
         description = $('#form-description > #body').val();
-
         $.ajax({
                     url: '/works/new-work',
                     type: 'POST',
@@ -105,7 +102,6 @@ var submitWork = function(){
 
 var editMedia = function(){
     if (isMediaEditable) {
-
         $("#submit-button").show();
         $('#media-tip').text('Click to view the media files');
         if (attached_media.length == 0){
@@ -123,7 +119,6 @@ var editMedia = function(){
     } else {
         isMediaEditable = 1;
         $("#submit-button").hide();
-
         $('#media-tip').text('Click to select the media files to attach');
         if (attached_media.length == 0){
                     $('#media-panel-title').text('Attach files:');
@@ -215,4 +210,4 @@ $(document).on("click","#zoom-close",function() {
             }
             display = 0;
        }
-    });
+});
