@@ -40,7 +40,7 @@ div.school-space {
 }
 
 footer{
-    position: absolute;
+    position: relative;
     margin: auto;
     width: 100%;
     bottom: 0px;
@@ -94,32 +94,6 @@ footer{
     display:none;
     resize:none;
 
-}
-
-.media-panel {
-    width: 85%;
-    background: #DBD0BC;
-
-    position:relative;
-    top: -5%;
-}
-    .media-panel > * {
-        grid-column: 2 / -2;
-    }
-
-    .media-panel > .full {
-        grid-column: 1 / -1;
-    }
-
-.media {
-    display: grid;
-    grid-gap: calc(var(--gutter) / 2);
-    grid-template-columns: repeat(5, calc(29% - var(--gutter) * 2));
-    grid-template-rows: minmax(150px, 1fr);
-    overflow-x: scroll;
-
-    padding-bottom: calc(.75 * var(--gutter));
-    margin-bottom: calc(-.25 * var(--gutter));
 }
 
 
