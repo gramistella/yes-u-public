@@ -42,21 +42,20 @@ var editWork = function()
         xhr.open('POST', '/backend', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({
-         type: 3,
-         work_id: $('meta[name=work_id]').attr("id"),
-         title: $('#form-title > #title').val(),
-         description: $('#form-description > #body').val(),
-         attached_media: unique_attached_media
+            type: 3,
+            work_id: $('meta[name=work_id]').attr("id"),
+            title: $('#form-title > #title').val(),
+            description: $('#form-description > #body').val(),
+            attached_media: unique_attached_media
         }));
         media_slider_public = document.getElementById('media-slider-public');
         while (media_slider_public.firstChild) {
-                            media_slider_public.firstChild.remove();
-                        }
-        //console.log(attached_media);
-        //console.log(ids);
+            media_slider_public.firstChild.remove();
+        }
+
         ids = [];
         urls = attached_media;
-        //console.log(urls);
+
         for (var i=0; i<attached_media.length; i++){
             html = generate_media_html(ids, urls, i, true);
             media_slider_public.insertAdjacentHTML("beforeend", html);
@@ -98,7 +97,7 @@ var editWork = function()
                             media_to_push = attached_img_src;
 
                         } else if (attached_video.length != 0){
-                            console.log(attached_video);
+
                             media_to_push = $(attached_video[0]).find('Source:first').attr('src')
 
                         } else if (attached_pdf.length != 0){
@@ -128,17 +127,14 @@ var editWork = function()
                             media_slider_private.firstChild.remove();
                         }
 
-                    console.log(attached_media);
+
                     for (var i=0; i < urls.length ;i++){
+
                         html = generate_media_html(ids, urls, i);
                         replaced_string = urls[i].replace(/\/\//g, "/");
-                        console.log(replaced_string);
-                        console.log(attached_media.includes(replaced_string))
+
                         if (attached_media.includes(replaced_string)){
-                            //console.log('selected url: ' + urls[i]);
                             html = html.slice(0, 22) + ' selected-media' + html.slice(22);
-                        } else {
-                            //console.log('current url: ' + urls[i]);
                         }
 
                         media_slider_private.insertAdjacentHTML("beforeend", html);
@@ -177,7 +173,7 @@ $(document).on("click","#media-slider > div.selectable", function (event) {
             if (src_img != null && src_img_pdf == null){
                 media_src = src_img;
             } else if (src_video != null){
-                //console.log(src_video);
+
                 media_src = src_video;
             } else if (src_img_pdf != null){
                 pdf_name = event.currentTarget.firstChild.children[1].textContent

@@ -30,20 +30,14 @@ var applySelectionCallback = function(attached_media){
         pdf_name = $(selected_node).find('div').find('p').text();
         src_pdf = '\\static\\user_uploads\\' + pdf_name + '.pdf';
         src_video = $(selected_node).find('video').find('source').attr('src');
-        console.log(selected_node);
         if (attached_media.includes(src_video) || attached_media.includes(src_pdf) || attached_media.includes(src_img)){
             if (!selected_node.classList.contains('pdf-container')){
                 selected_node.classList.add("selected-media");
             }
-        } else {
-            console.log($(selected_node));
-            console.log(src_img);
-            console.log(src_pdf);
-            console.log(src_video);
         }
     }
 
-    console.log(children.length);
+
 }
 
 var refreshMedia = async function(displayControls = false, _callback = null, attached_media = null){

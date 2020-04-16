@@ -65,7 +65,7 @@ var uploadMedia = function()
         dropperForm.className = 'hidden';
         isUploadFormVisible = 0;
         refreshMedia(false, applySelectionCallback, attached_media);
-        //console.log(attached_media);
+
         $("body").removeClass("modal-open");
     } else {
         dropperForm.className = '';
@@ -81,7 +81,7 @@ var submitWork = function(){
 
         title = $('#form-title > #title').val();
         description = $('#form-description > #body').val();
-        //console.log(attached_media);
+
         $.ajax({
                     url: '/works/new-work',
                     type: 'POST',
