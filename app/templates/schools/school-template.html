@@ -6,10 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/css/bootstrap4.3.1.min.css') }}">
+    {% if is_school_owner %}
+    {% compress 'css' %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/css/dropzone5.4.0.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/css/dropzone5.4.0-basic.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/navigation.css') }}">
+    {% endcompress %}
+    {% else %}
+    {% compress 'css' %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/navigation.css') }}">
+    {% endcompress %}
+    {% endif %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/school-template.css') }}">
+
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <title>Yes-U! - {{ user.name }} </title>
 </head>
@@ -241,15 +250,23 @@
 
     </footer>
 
-    <script type="application/javascript" src="{{ url_for('static', filename='libs/jquery3.4.1.min.js') }}"></script>
-    <script type="application/javascript" src="{{ url_for('static', filename='libs/media.js') }}"></script>
-    <script type="application/javascript" src="{{ url_for('static', filename='js/navigation.js') }}"></script>
     {% if is_school_owner %}
-    <script type="application/javascript" src="{{ url_for('static', filename='libs/dropzone5.4.0.min.js') }}"></script>
-    <script type="application/javascript" src="{{ url_for('static', filename='js/utils.js') }}"></script>
-    <script type="application/javascript" src="{{ url_for('static', filename='js/your-page.js') }}"></script>
+    {% compress 'js' %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery3.4.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/dropzone5.4.0.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/media.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/navigation.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/utils.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/your-page.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/school_page.js') }}"></script>
+    {% endcompress %}
+    {% else %}
+    {% compress 'js' %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery3.4.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/media.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/navigation.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/school_page.js') }}"></script>
+    {% endcompress %}
     {% endif %}
-    <script type="application/javascript" src="{{ url_for('static', filename='js/school_page.js') }}"></script>
-
 </body>
 </html>

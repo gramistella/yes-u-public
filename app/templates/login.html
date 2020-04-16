@@ -1,15 +1,15 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/css/bootstrap4.3.1.min.css') }}">
+    {% compress 'css' %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/navigation.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}">
-
+    {% endcompress %}
 
     <title>Yes-U! - Log in</title>
 </head>
@@ -85,9 +85,10 @@
 
     </footer>
 
-    <script type="application/javascript" src="{{ url_for('static', filename='libs/jquery3.4.1.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/navigation.js') }}" ></script>
-    <script src="{{ url_for('static', filename='js/login.js') }}" ></script>
-
+    {% compress 'js' %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery3.4.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/navigation.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/login.js') }}" ></script>
+    {% endcompress %}
 </body>
 </html>

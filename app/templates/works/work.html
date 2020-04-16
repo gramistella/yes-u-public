@@ -7,9 +7,11 @@
     <meta name="work_id" id="{{ work.id }}">
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/css/bootstrap4.3.1.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/navigation.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/school-template.css') }}">
+    {% compress 'css' %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/navigation.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/work-template.css') }}">
+    {% endcompress %}
 
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <title>Yes-U! - {{ work.title }}</title>
@@ -173,11 +175,13 @@
 
     </footer>
 
-    <script type="application/javascript" src="{{ url_for('static', filename='libs/jquery3.4.1.min.js') }}"></script>
-    <script type="application/javascript" src="{{ url_for('static', filename='libs/media.js') }}"></script>
-    <script type="application/javascript" src="{{ url_for('static', filename='js/navigation.js') }}"></script>
-    <script type="application/javascript" src="{{ url_for('static', filename='js/utils.js') }}"></script>
-    <script type="application/javascript" src="{{ url_for('static', filename='js/work.js') }}"></script>
+    {% compress 'js' %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery3.4.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/media.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/navigation.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/utils.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/work.js') }}"></script>
+    {% endcompress %}
 
 </body>
 </html>

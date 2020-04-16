@@ -6,9 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/css/bootstrap4.3.1.min.css') }}">
+    {% compress 'css' %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/navigation.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/work-index.css') }}">
+    {% endcompress %}
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
     <title>Yes-U! - {{ title }} </title>
 </head>
 <body>
@@ -92,12 +95,11 @@
 
     </footer>
 
-    <script type="application/javascript" src="{{ url_for('static', filename='libs/jquery3.4.1.min.js') }}"></script>
-    <script type="application/javascript" src="{{ url_for('static', filename='js/navigation.js') }}"></script>
-    {% if is_school_owner %}
-    <script type="application/javascript" src="{{ url_for('static', filename='js/your-page.js') }}"></script>
-    {% endif %}
-    <script type="application/javascript" src="{{ url_for('static', filename='js/school_page.js') }}"></script>
+    {% compress 'js' %}
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery3.4.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/navigation.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/school_page.js') }}"></script>
+    {% endcompress %}
 
 </body>
 </html>

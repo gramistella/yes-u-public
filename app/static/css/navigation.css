@@ -89,7 +89,7 @@ nav > ul > li > a:hover ~ .active:before {
 
 
 h1.mobile {
-    display: none
+    display: none;
 }
 
 .nav-window {
@@ -408,14 +408,13 @@ h1.mobile {
         display:none;
     }
 
-    h1.mobile{
-        display:flex;
-        height 60px;
+    h1.mobile {
+        display: flex;
+        height: 60px;
         align-content: center;
         align-items: center;
         justify-content: center;
-        height:58px
-
+        height: 58px;
     }
     .erasmus-logo{
         top: unset;
@@ -488,10 +487,6 @@ h1.mobile {
     nav {
         display: none;
     }
-    
-    .topnav.responsive {
-            
-    }
 
     #menu-toggle.responsive a.icon {
         position: absolute;
@@ -518,12 +513,9 @@ h1.mobile {
         width: 100%;
         text-align: left;
     }
-    
-    .nav-list {
-       
-    }
+
     .nav-list li:last-child {
-        padding-bottom: 4em
+        padding-bottom: 4em;
     }
 }
 @media (max-width:450px) {

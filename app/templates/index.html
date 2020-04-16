@@ -5,11 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    {% compress 'css' %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/css/bootstrap4.3.1.min.css') }}">
+    {% compress 'css' %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/navigation.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
     {% endcompress %}
+
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     
     <title>Yes-U! - Home</title>
@@ -148,9 +149,9 @@
     </footer>
 
     {% compress 'js' %}
-    <script type="application/javascript" src="{{ url_for('static', filename='libs/jquery3.4.1.min.js') }}"></script>
-    <script type="application/javascript" src="{{ url_for('static', filename='js/index.js') }}" ></script>
-    <script type="application/javascript" src="{{ url_for('static', filename='js/navigation.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery3.4.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/navigation.js') }}" ></script>
     {% endcompress %}
 </body>
 </html>
