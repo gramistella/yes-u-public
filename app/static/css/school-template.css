@@ -411,7 +411,9 @@ h4{
         bottom: -9%;
         border-radius: 0px;
     }
-
+    .media-play-button{
+        display: none;
+    }
     .school-space{
         border-radius: 0px !important;
     }
