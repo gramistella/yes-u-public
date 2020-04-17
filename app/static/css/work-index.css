@@ -36,15 +36,20 @@ div.school-space {
     height: 600px;
     align-items:center;
     justify-content:center;
-    margin-bottom: 50px;
+
 }
 
 footer{
-    position: relative;
+    position: static;
     margin: auto;
     width: 100%;
     bottom: 0px;
+    padding-top: 50px;
+}
 
+footer > div {
+    position: unset;
+    bottom: unset;
 }
 
 .panel {
@@ -118,7 +123,7 @@ footer{
     width: 98%;
     height: 550px;
     max-height: 100%;
-    background-color: whitesmoke;
+    background-color: rgb(247,247,247);
     display: inline-block;
     overflow-x: hidden;
     border-radius: 10px;
@@ -132,7 +137,7 @@ footer{
     flex-direction: column;
     align-content: center;
     align-items: center;
-    background-color: whitesmoke;
+    background-color: rgb(250,250,250);
     border-radius:15px;
     position:relative;
     top:-19%;
@@ -155,10 +160,32 @@ footer{
   margin-bottom: 10px;
 }
 
+h4{
+    display:inline-block;
+}
+.work-table {
+    margin-left: auto;
+    margin-right: auto;
+    display:table;
+    border-spacing: 25px 8px;
+    border-collapse: separate;
+    position:relative;
+    width: 100%;
+
+}
+
+.button.delete{
+    background-color:red;
+}
+
+.work-buttons{
+    display:flex;
+}
+
 .work-cell{
     margin-top: 10px;
-    background-color: ghostwhite;
-    height:200px;
+    background-color: rgb(253,253,254);
+    height:150px;
     width:100%;
     border-radius: 10px;
     display:flex;
@@ -166,14 +193,76 @@ footer{
     align-items:center;
     flex-direction:column;
     overflow:hidden;
-    box-shadow: 0px 3px 5px 0px black
+    box-shadow: 0px 1px 3px black;
 }
 
-.cell-headers.upload{
-    right: 30px
+.work-cell-description > *{
+   margin: 0px 10px;
+   word-break: break-word;
 }
-h4{
-    display:inline-block;
+
+.work-cell-text{
+    flex-grow:2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-basis: 100%;
+}
+
+.work-cell-description{
+    text-align:center;
+}
+
+.create-work-cell{
+    margin-top: 10px;
+
+    height:55px;
+    width:100%;
+
+    display:flex;
+    align-content:center;
+    align-items:center;
+    flex-direction:column;
+    overflow:hidden;
+
+}
+
+.new-work.button{
+    width: 99%;
+    height: 79%;
+    line-height: 33px;
+}
+
+.work-cell-container{
+    display:flex;
+    width:100%;
+    height: 100%;
+    justify-content:center;
+    align-content: center;
+    align-items: center;
+}
+.work-cell-date{
+    padding: 0 15px;
+    flex-basis: 100%;
+    text-align: center;
+}
+
+.work-cell-author{
+    padding: 0 15px;
+    flex-basis: 103%;
+}
+.panel-title{
+    padding-bottom: 12px;
+    padding-top: 10px;
+    width: 100%;
+    text-align: center;
+    background-color: rgb(249,249,249);
+    margin-bottom: 15px;
+    border-radius: 19px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 #edit-button{
     float:right;

@@ -91,7 +91,7 @@
 
                 <div style="display:inline-block;height:70px">
 
-                <h4 style="color:white">
+                <h4>
                     Attached Media:
                 </h4>
                     <p id="public-media-tip" class="media-tip" >{% if media_list|length > 0 %}
@@ -109,7 +109,7 @@
                         <img class="single-media" src="{{ media.path[5:] }}" >
                         {% elif media.type == 2 %}
                         <img class="media-play-button" src="{{ url_for('static', filename='resources/play-button.png') }}" >
-                        <video class="single-media">
+                        <video class="single-media" preload="metadata">
                           <source src="{{ media.path[5:] }}" type="video/mp4">
                           Your browser does not support HTML5 video.
                         </video>
@@ -128,7 +128,7 @@
             {% if is_owner %}
             <div id="edit-form" style="display:none">
                  <form method="POST">
-                    <div class="form-field" id="form-title">{{ form.title.label }} {{ form.title }}
+                    <div class="form-field" id="form-title">{{ form.title.label }} {{ form.title(maxlength=max_title) }}
                       {% if form.title.errors %}
                         <ul class="errors">
                           {% for error in form.title.errors %}
@@ -137,7 +137,7 @@
                         </ul>
                       {% endif %}
                     </div>
-                    <div class="form-field" id="form-description" style="height:200px">{{ form.body.label }} {{ form.body }}
+                    <div class="form-field" id="form-description" style="height:200px">{{ form.body.label }} {{ form.body(maxlength=max_desc) }}
                       {% if form.body.errors %}
                         <ul class="errors">
                           {% for error in form.body.errors %}
@@ -151,7 +151,7 @@
 
                 <div style="display:inline-block;height:75px">
 
-                <h4 id="media-panel-title" style="color:white;position:absolute;left:0;right:0">
+                <h4 id="media-panel-title" style="position:absolute;left:0;right:0">
                     Attached Media:
                 </h4>
                     <p class="media-tip" id="media-tip"></p>

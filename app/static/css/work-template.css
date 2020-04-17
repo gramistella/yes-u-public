@@ -2,12 +2,14 @@
     flex-direction:column;
 }
 
-.panel{
-
-    position: absolute;
-    left: 10%;
-    height: 700px;
-    bottom: unset;
+.panel {
+	position: absolute;
+	height: 650px;
+	bottom: unset;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	width: 75%;
 }
 
 .fade{
@@ -24,6 +26,7 @@ footer{
     height: 667px;
 }
 
+
 #work{
     height: 85%;
     flex-direction: column;
@@ -35,25 +38,44 @@ footer{
 }
 
 .media-panel {
-    width: 100%;
-    background: #5073B3;
+    width: 75%;
+    background: #fcfcfc;
     position: absolute;
     bottom: 60px;
     top: unset;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    border-radius: 8px;
+}
+
+
+#submit-button{
+	color: white;
+	text-decoration: none;
+	position: absolute;
+	bottom: -30px;
+	left: 0;
+	right: 0;
+	width: 128px;
 }
 
 .media-tip{
-    color: white;
     padding:unset;
     top: 25px !important;
 }
 #media-tip{
     top: 65px !important;
-    color: white;
-}
 
+}
 #description > p {
     white-space: pre-line;
+    word-wrap: break-word;
+    width: 35%;
+    left: 0;
+    right: 0;
+    position: absolute;
+    margin: auto;
 }
 input#title{
     width:100%;
@@ -64,7 +86,7 @@ textarea#body{
     text-align:center;
     width:100%;
     resize:none;
-    height:19vh;
+    height:14vh;
 }
 #edit-form{
     display: flex;
@@ -78,7 +100,7 @@ textarea#body{
 }
 
 #edit-form > form{
-    width: 98%;
+    width: 75%;
     position: absolute;
     top: 5px;
 }

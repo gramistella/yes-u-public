@@ -163,6 +163,7 @@ h1.mobile {
     margin: auto;
     display: block;
     box-shadow: 3px 3px black;
+    border-radius: 2px;
 }
 
 .container {

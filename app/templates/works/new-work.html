@@ -73,8 +73,8 @@
             <div id="work">
 
                 <div id="edit-form" >
-                     <form method="POST" style="width:97%">
-                        <div class="form-field" id="form-title" style="padding-bottom:25px">{{ form.title.label }} {{ form.title }}
+                     <form method="POST" style="width:75%">
+                        <div class="form-field" id="form-title" style="padding-bottom:25px">{{ form.title.label }} {{ form.title(maxlength=max_title) }}
                           {% if form.title.errors %}
                             <ul class="errors">
                               {% for error in form.title.errors %}
@@ -83,7 +83,7 @@
                             </ul>
                           {% endif %}
                         </div>
-                        <div class="form-field" id="form-description">{{ form.body.label }} {{ form.body }}
+                        <div class="form-field" id="form-description">{{ form.body.label }} {{ form.body(maxlength=max_desc) }}
                           {% if form.body.errors %}
                             <ul class="errors">
                               {% for error in form.body.errors %}
@@ -133,7 +133,7 @@
 
             </div>
                 <div id="loading-spinner" class="lds-ring"><div></div><div></div><div></div><div></div></div>
-                <a class="button" id="submit-button" style="color:white;text-decoration:none;position:absolute;bottom:-40px;left:0;right:0;width:128px;" onclick="submitWork()">Submit work</a>
+                <a class="button" id="submit-button" onclick="submitWork()">Submit work</a>
         </div>
     </div>
         </div>

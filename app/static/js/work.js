@@ -3,7 +3,7 @@ attached_media = [];
 
 (function () {
     var a = document.getElementById("body"),
-    limit = 7;//Define max lines limit
+    limit = 5;//Define max lines limit
 
     if (a != null){
         function limitLines() {

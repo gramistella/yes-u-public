@@ -37,3 +37,7 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+    console.log('changed!!');
+})

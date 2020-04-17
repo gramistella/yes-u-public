@@ -63,7 +63,7 @@
     <div class="container">
         <div class="panel">
             <div class="work-panel">
-                <h4 class="panel-title" style="padding-bottom: 10px">
+                <h4 class="panel-title">
                     Our works
                 </h4>
                 <div class="works">
@@ -71,13 +71,25 @@
                     <div class="work-table">
                         {% for work in works %}
                         <div class="work-cell">
-                            <div style="display:flex;width:100%;justify-content:center;">
-                                <h5 class="cell-headers author" style="padding: 0 15px;position: absolute;left: 30px;">{{ get_author_from_id(work.author_id) }}</h5>
-                                <h5 class="cell-headers title" style="padding: 0 15px;position:absolute;text-align:center;">{{ work.title }}</h5>
-                                <h5 class="cell-headers upload" style="padding: 0 15px;position:absolute;">{{ work.upload_date.strftime('%d/%m/%Y') }}</h5>
+
+                            <div class="work-cell-container">
+                                <h5 class="work-cell-author"> {{ get_author_from_id(work.author_id) }} </h5>
+                                <div class="work-cell-text">
+                                    <h5 style="text-align:center;"> {{ work.title|truncate(60) }} </h5>
+                                    <div class="work-cell-description">
+                                        <h6>{{ work.description|truncate(105) }}</h6>
+                                    </div>
+                                    <div class="work-buttons">
+                                         <a class="button" style="position:relative;top:0%;height:30px;line-height:15px;margin: 10px 10px;" href="{{ url_for('user_work', work_id=work.id) }}">View</a>
+                                        {% if is_school_owner %}
+                                        <a class="button delete" style="position:relative;top:0%;height:30px;line-height:15px;margin: 10px 10px;">Delete</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <h5 class="work-cell-date"> {{ work.upload_date.strftime('%d/%m/%Y, %H:%M') }} </h5>
+
                             </div>
-                            <h6 style="position:relative;top:43px;text-align:center;overflow-wrap:break-word;white-space:pre-line;height:100px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient: vertical;">{{ work.description }}</h6>
-                             <a class="button" style="position:relative;top:20%;margin-top:8px;" href="{{ url_for('user_work', work_id=work.id) }}">View</a>
+
                         </div>
                         {% endfor %}
 

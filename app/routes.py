@@ -13,7 +13,7 @@ CORS(app)
 
 max_characters_allowed_bio = 190
 max_characters_allowed_work_title = 50
-max_characters_allowed_work_desc = 350
+max_characters_allowed_work_desc = 360
 
 
 @app.route('/')
@@ -195,6 +195,7 @@ def handle_request():
         else:
             return '', 200
 
+
     if request.method == 'POST':
         content = request.get_json(silent=True)
         request_type = content['type']
@@ -210,6 +211,7 @@ def handle_request():
                 db.session.commit()
                 print(current_user.description + '\n + \n' + description, file=sys.stdout)
             return '', 204
+        # Edit school description
         elif request_type == 2:
             image = request.files['image']
 
@@ -236,8 +238,6 @@ def handle_request():
                 except TypeError:
                     pass
             id_list = ','.join(id_list)
-            description = (description[:max_characters_allowed_bio]) \
-                if len(description) > max_characters_allowed_bio else description
 
             if true_if_owner(selected_work, current_user):
 
@@ -371,7 +371,9 @@ def user_work(work_id):
             work=current_work,
             is_owner=is_owner,
             form=form,
-            media_list=media_list)
+            media_list=media_list,
+            max_title=max_characters_allowed_work_title,
+            max_desc= max_characters_allowed_work_desc)
     else:
         abort(404)
 
@@ -405,7 +407,10 @@ def new_work():
 
         return render_template(
             '/works/new-work.html',
-            form=form)
+            form=form,
+            max_title=max_characters_allowed_work_title,
+            max_desc=max_characters_allowed_work_desc
+        )
 
 
 @app.route('/works/delete', methods=['POST'])

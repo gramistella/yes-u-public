@@ -2,7 +2,7 @@ isUploadFormVisible = 0;
 
 (function () {
     var a = document.getElementById("body"),
-        limit = 7;//Define max lines limit
+        limit = 6;//Define max lines limit
 
     function limitLines() {
         var l = a.value.replace(/\r\n/g, "\n").replace(/\r/g, "").split(/\n/g);//split lines
@@ -114,7 +114,7 @@ var editMedia = function(){
                     }
                 }
         $('#upload-button').hide();
-        $('#attach-button').text('Attach files:');
+        $('#attach-button').text('Attach files');
         isMediaEditable = 0;
     } else {
         isMediaEditable = 1;

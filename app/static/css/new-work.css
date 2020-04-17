@@ -7,7 +7,7 @@
     position: relative;
 }
 #edit-form > form{
-    top: -90px;
+    top: -80px;
 }
 ul.errors > li {
     list-style: none;
@@ -27,7 +27,7 @@ footer {
 }
 
 #media-panel-title{
-    color: white;
+
     position: absolute;
     left: 0;
     right: 0;
