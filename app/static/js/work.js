@@ -28,7 +28,7 @@ var editWork = function()
 {
     if (isWorkEditable){
 
-        $('#edit-button').text('Edit Work');
+        $('#edit-button').text('Edit');
         $('#work > h4').text("");
         $('#work > h4').text($('#form-title > #title').val());
         $('#description > p').text($('#form-description > #body').val());
@@ -98,7 +98,9 @@ var editWork = function()
 
                         } else if (attached_video.length != 0){
 
-                            media_to_push = $(attached_video[0]).find('Source:first').attr('src')
+                            var s = $(attached_video[0]).find('Source:first').attr('src')
+                            var n = s.indexOf('#');
+                            media_to_push = s.substring(0, n != -1 ? n : s.length);
 
                         } else if (attached_pdf.length != 0){
                             pdf_name = attached_pdf[0].textContent;
@@ -127,7 +129,7 @@ var editWork = function()
                             media_slider_private.firstChild.remove();
                         }
 
-
+                    console.log(attached_media);
                     for (var i=0; i < urls.length ;i++){
 
                         html = generate_media_html(ids, urls, i);

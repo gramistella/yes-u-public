@@ -123,7 +123,7 @@ footer > div {
     width: 98%;
     height: 550px;
     max-height: 100%;
-    background-color: rgb(247,247,247);
+    background-color: white;
     display: inline-block;
     overflow-x: hidden;
     border-radius: 10px;
@@ -251,7 +251,8 @@ h4{
 
 .work-cell-author{
     padding: 0 15px;
-    flex-basis: 103%;
+    flex-basis: 102%;
+    text-align: center;
 }
 .panel-title{
     padding-bottom: 12px;

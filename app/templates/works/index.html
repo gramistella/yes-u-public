@@ -73,9 +73,9 @@
                         <div class="work-cell">
 
                             <div class="work-cell-container">
-                                <h5 class="work-cell-author"> {{ get_author_from_id(work.author_id) }} </h5>
+                                <h5 class="work-cell-author"><a href="{{ url_for('school_handler', school_id=work.author_id) }}" style="color: inherit;">{{ get_author_from_id(work.author_id) }}</a></h5>
                                 <div class="work-cell-text">
-                                    <h5 style="text-align:center;"> {{ work.title|truncate(60) }} </h5>
+                                    <h5 style="text-align:center;">{{ work.title|truncate(60) }}</h5>
                                     <div class="work-cell-description">
                                         <h6>{{ work.description|truncate(105) }}</h6>
                                     </div>

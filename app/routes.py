@@ -54,6 +54,13 @@ def true_if_owner(obj, author):
 app.jinja_env.globals.update(get_author_from_id=get_author_from_id)
 
 
+def safe_cast(val, to_type, default=None):
+    try:
+        return to_type(val)
+    except (ValueError, TypeError):
+        return default
+
+
 @app.template_filter('strftime')
 def _jinja2_filter_datetime(date, fmt=None):
 
@@ -61,6 +68,7 @@ def _jinja2_filter_datetime(date, fmt=None):
     native = date.replace(tzinfo=None)
     format_string = '%b %d, %Y'
     return native.strftime(format_string)
+
 
 @app.route('/works')
 def work_index():
@@ -153,6 +161,30 @@ def school_slovenia():
     return populate_school_template(slovenia)
 
 
+@app.route('/schools/<school_id>')
+def school_handler(school_id):
+    school_page = None
+    school_id = safe_cast(school_id, int)
+    if school_id == 1:
+        school_page = 'norway'
+    elif school_id == 2:
+        school_page = 'italy'
+    elif school_id == 3:
+        school_page = 'netherlands'
+    elif school_id == 4:
+        school_page = 'greece'
+    elif school_id == 5:
+        school_page = 'france'
+    elif school_id == 6:
+        school_page = 'slovenia'
+
+    if school_page is not None:
+        school_page = 'school_' + school_page
+        return redirect(url_for(school_page), code=302)
+    else:
+        return redirect(url_for('index'))
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -235,7 +267,7 @@ def handle_request():
                 try:
                     path = media[25:]
                     id_list.append(str(Media.query.filter(Media.path.contains(path)).first().id))
-                except TypeError:
+                except (TypeError, AttributeError) as e:
                     pass
             id_list = ','.join(id_list)
 

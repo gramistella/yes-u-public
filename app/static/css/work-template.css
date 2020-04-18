@@ -37,11 +37,33 @@ footer{
     position:relative;
 }
 
+.work-details{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+.work-details > * {
+    text-align:center;
+    flex-basis: 100%;
+}
+
+#work > hr{
+    border-top: 1px solid lightgray;
+    width: 75%;
+    margin-top: 0.5rem;
+}
+
 .media-panel {
     width: 75%;
     background: #fcfcfc;
     position: absolute;
-    bottom: 60px;
+    bottom: 0px;
     top: unset;
     left: 0;
     right: 0;

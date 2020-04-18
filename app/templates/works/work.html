@@ -72,6 +72,11 @@
                         style="padding-top:20px;"
                             {% endif %}>
                 <h4>{{ work.title }}</h4>
+                <div class="work-details">
+                    <h6><a href="{{ url_for('school_handler', school_id=work.author_id) }}" style="color: inherit;">{{ get_author_from_id(work.author_id) }}</a></h6>
+                    <h6>{{ work.upload_date.strftime('%d/%m/%Y, %H:%M') }}</h6>
+                </div>
+                <hr>
                 <div id="description">
                     <p>{{ work.description }}</p>
                 </div>
@@ -147,7 +152,7 @@
                       {% endif %}
                     </div>
                   </form>
-                <div class="media-panel" style="margin-bottom: 30px;">
+                <div class="media-panel" style="margin-bottom: 30px; bottom: 60px;">
 
                 <div style="display:inline-block;height:75px">
 
