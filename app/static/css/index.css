@@ -19,7 +19,7 @@ footer{
 div.content > div.img {
     background-position: center;
     height: 450px;
-    width: 450px;
+    width: 200px;
     overflow: hidden;
     float: right;
     margin:1em 1em;
