@@ -213,6 +213,9 @@ h4{
 
 .work-cell-description{
     text-align:center;
+    text-overflow: ellipsis;
+    height: 60px;
+    overflow: hidden;
 }
 
 .create-work-cell{
@@ -342,6 +345,11 @@ h6{
     .work-panel{
         top: 40px;
     }
+    .work-cell-description{
+        text-overflow: ellipsis;
+        height: 60px;
+        overflow: hidden;
+    }
 
 }
 
@@ -360,6 +368,9 @@ h6{
         font-size: 2em;
     }
 
+    .work-table{
+        border-spacing: 5px 8px;
+    }
     .work-panel{
         border-radius: 0px;
         width: 100%;
@@ -381,6 +392,14 @@ h6{
     .cell-headers.upload{
         right: -30px;
     }
+    .work-cell{
+        height: 200px;
+    }
+
+    .work-cell-description{
+        height: 100px;
+    }
+
 }
 
 @media(max-width:450px) {

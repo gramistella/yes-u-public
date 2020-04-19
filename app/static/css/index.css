@@ -11,7 +11,7 @@ footer{
 }
 
 .content-division{
-
+    width: 70%;
 }
 .main {
     padding-top: -20px
@@ -19,7 +19,7 @@ footer{
 div.content > div.img {
     background-position: center;
     height: 450px;
-    width: 200px;
+    width: 450px;
     overflow: hidden;
     float: right;
     margin:1em 1em;
@@ -63,6 +63,7 @@ h5 {
 .school-paragraph-container{
     display: flex;
     width: 100%;
+    justify-content: center;
 }
 img.logo {
     width: 450px;
@@ -104,7 +105,7 @@ img.logo {
 .main-text{
     max-width: 650px;
     padding-top: 20px;
-    padding-left: 15px;
+
     padding-right: 10px;
 }
 
@@ -189,6 +190,10 @@ img.logo {
 
     .school-paragraph-container{
         flex-direction: column;
+    }
+
+    div.content > div.img {
+        width: 200px;
     }
 }
 @media(max-width:400px){
