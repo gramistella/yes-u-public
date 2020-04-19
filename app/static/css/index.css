@@ -50,7 +50,7 @@ h5 {
 }
 
 .carousel {
-
+    padding-left: 50px;
     width: 450px;
     overflow: hidden;
 }
@@ -181,6 +181,7 @@ img.logo {
     .carousel{
         order: 1;
         height: 245px;
+        padding-left: 0px;
     }
     .carousel > div {
         width: 300px;
