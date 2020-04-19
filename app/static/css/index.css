@@ -39,7 +39,6 @@ div.content > div.paragraph {
     text-align: center;
     justify-content:center;
     flex-direction:column;
-    width: 400px;
     margin: 0 auto;
 }
 
@@ -51,7 +50,6 @@ h5 {
 
 .carousel {
     padding-left: 50px;
-    width: 450px;
     overflow: hidden;
 }
 
@@ -64,6 +62,7 @@ h5 {
 
 .school-paragraph-container{
     display: flex;
+    width: 100%;
 }
 img.logo {
     width: 450px;
