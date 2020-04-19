@@ -98,6 +98,7 @@ footer{
     background: rgb(252,252,252);
     position:relative;
     top: -5%;
+    border-radius: 25px;
 }
     .media-panel > * {
         grid-column: 2 / -2;
@@ -125,6 +126,7 @@ footer{
     -ms-user-select: none;
     justify-content: safe center;
     height: 160px;
+    touch-action: pan-y;
 }
 .media-play-button{
     position: absolute;
@@ -245,7 +247,7 @@ footer{
 
 .work-cell-author{
     padding: 0 15px;
-    flex-basis: 103%;
+    flex-basis: 100%;
 }
 .single-media{
     max-width:100%;

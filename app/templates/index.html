@@ -60,83 +60,73 @@
     </div>
     <div class="container">
         <div class="content main">
-            <div class="img logo" style="background-image: url('{{ url_for('static', filename='resources/logo.png') }}');background-size:contain"></div>
-            <div class="paragraph">
+            <div class="logo img" style="background-image: url('{{ url_for('static', filename='resources/logo.png') }}');background-size:contain"></div>
+            <div class="main-paragraph">
                 <h2>
                     The project
                 </h2>
-                <p class="desktop-paragraph">
-                    This project aims to encourage young people to believe in themselves, <br/>
-		    raise their voice, have faith in democratic values and engage in causes <br/>
-                    bigger than themselves. <br/>
-                    Thus they will apply the principles of active citizenship and contribute <br/>
-                    to a renewal of the use of their democratic rights. <br/>
-                    This is an effort that has to start with the students themselves: this is <br/>
-                    our main motive in the YES-U! Project (Young Europeans Stand Up!). <br/>
-                    Our objectives are to lead students to reflect <br/>
-                    on the impact of indifference in contrast to dedication, to explore the boundaries <br/>
-                    of their power over things, think critically and creatively about new ways <br/>
-                    to face problems, promote their active participation as members of their respective societies.
-                </p>
-                <p class="mobile-paragraph">
-		    This project aims to encourage young people to believe in themselves, 
-		    raise their voice, have faith in democratic values and engage in causes  
-                    bigger than themselves. 
-                    Thus they will apply the principles of active citizenship and contribute  
-                    to a renewal of the use of their democratic rights.  
-                    This is an effort that has to start with the students themselves: this is 
-                    our main motive in the YES-U! Project (Young Europeans Stand Up!). 
-                    Our objectives are to lead students to reflect 
-                    on the impact of indifference in contrast to dedication, to explore the boundaries 
-                    of their power over things, think critically and creatively about new ways 
+                <p class="main-text">
+                    This project aims to encourage young people to believe in themselves,
+		            raise their voice, have faith in democratic values and engage in causes
+                    bigger than themselves.
+                    Thus they will apply the principles of active citizenship and contribute
+                    to a renewal of the use of their democratic rights. <br> <br>
+                    This is an effort that has to start with the students themselves: this is
+                    our main motive in the YES-U! Project (Young Europeans Stand Up!). <br> <br>
+                    Our objectives are to lead students to reflect
+                    on the impact of indifference in contrast to dedication, to explore the boundaries
+                    of their power over things, think critically and creatively about new ways
                     to face problems, promote their active participation as members of their respective societies.
                 </p>
             </div>
         </div>
+        <hr class="content-division">
         <div class="content school-section">
-            <div class="paragraph">
-                <h2>
+            <h2>
                     The schools
-                </h2>
-                <p>
-                    The six partner schools are:
-                    <ul>
-                        <li>Sandnes videregående skole
-                        <li>Regionale Scholengemeenschap 't Rijks
-                        <li>A’ Arsakeio Tositseio Lykeio Ekalis
-                        <li>Lycee Vauban
-                        <li>Liceo Scientifico Statale Galileo Galilei
-                        <li>Gimnazija Kranj
-                    </ul>
-                    <a class="button" style="text-decoration:none" href="{{ url_for('school_index') }}" >View Schools </a>
+            </h2>
+            <div class="school-paragraph-container">
+                <div class="paragraph-schools">
+                    <p>
+                        The six partner schools are:
+                        <ul class="ul-schools">
+                            <li>Sandnes videregående skole
+                            <li>Regionale Scholengemeenschap 't Rijks
+                            <li>A’ Arsakeio Tositseio Lykeio Ekalis
+                            <li>Lycee Vauban
+                            <li>Liceo Scientifico Statale Galileo Galilei
+                            <li>Gimnazija Kranj
+                        </ul>
+                        <a class="button" style="text-decoration:none" href="{{ url_for('school_index') }}" >View Schools </a>
 
-            </div>
-            <div class="carousel">
-                <div>
-                    <img class="slide" src= "{{ url_for('static', filename='resources/norway.png') }}" style="max-width: 450px; max-height: 250px; " />
-                    <h5 class="subtitle" align="center"> Sandnes videregående skole <br /> Norway</h5>
                 </div>
-                <div>
-                    <img class="slide" src= "{{ url_for('static', filename='resources/netherlands.jpg') }}" style="max-width: 450px; max-height: 450px;  " />
-                    <h5 class="subtitle" align="center"> Regionale Scholengemeenschap 't Rijks <br /> The Netherlands</h5>
-                </div>
-                <div>
-                    <img class="slide" src="{{ url_for('static', filename='resources/italy.png') }}" style="max-width: 450px; max-height: 300px;  " />
-                    <h5 class="subtitle" align="center">Catania, Italy</h5>
-                </div>
-                <div>
-                    <img class="slide" src="{{ url_for('static', filename='resources/france.jpg') }}" style="max-width: 450px; max-height: 450px;  " />
-                    <h5 class="subtitle" align="center"> Lycee Vauban, France</h5>
-                </div>
-                <div>
-                    <img class="slide" src=" {{ url_for('static', filename='resources/slovenia.jpg') }}" style="max-width: 450px; max-height: 450px;  " />
-                    <h5 class="subtitle" align="center"> Gimnazija Kranj, Slovenia</h5>
-                </div>
-                <div>
-                    <img class="slide" src="{{ url_for('static', filename='resources/greece.jpg') }}" style="max-width: 450px; max-height: 450px; " />
-                    <h5 class="subtitle" align="center"> A’ Arsakeio Tositseio Lykeio Ekalis <br /> Greece</h5>
-                </div>
+                <div class="carousel">
+                    <div>
+                        <img class="slide" src= "{{ url_for('static', filename='resources/norway.png') }}" style="max-width: 450px; max-height: 250px; " />
+                        <h5 class="subtitle" align="center"> Sandnes videregående skole <br /> Norway</h5>
+                    </div>
+                    <div>
+                        <img class="slide" src= "{{ url_for('static', filename='resources/netherlands.jpg') }}" style="max-width: 450px; max-height: 450px;  " />
+                        <h5 class="subtitle" align="center"> Regionale Scholengemeenschap 't Rijks <br /> The Netherlands</h5>
+                    </div>
+                    <div>
+                        <img class="slide" src="{{ url_for('static', filename='resources/italy.png') }}" style="max-width: 450px; max-height: 300px;  " />
+                        <h5 class="subtitle" align="center">Catania, Italy</h5>
+                    </div>
+                    <div>
+                        <img class="slide" src="{{ url_for('static', filename='resources/france.jpg') }}" style="max-width: 450px; max-height: 450px;  " />
+                        <h5 class="subtitle" align="center"> Lycee Vauban, France</h5>
+                    </div>
+                    <div>
+                        <img class="slide" src=" {{ url_for('static', filename='resources/slovenia.jpg') }}" style="max-width: 450px; max-height: 450px;  " />
+                        <h5 class="subtitle" align="center"> Gimnazija Kranj, Slovenia</h5>
+                    </div>
+                    <div>
+                        <img class="slide" src="{{ url_for('static', filename='resources/greece.jpg') }}" style="max-width: 450px; max-height: 450px; " />
+                        <h5 class="subtitle" align="center"> A’ Arsakeio Tositseio Lykeio Ekalis <br /> Greece</h5>
+                    </div>
 
+                </div>
             </div>
         </div>
     </div>
