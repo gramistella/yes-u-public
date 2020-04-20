@@ -38,17 +38,22 @@ div.school-space {
     justify-content:center;
 
 }
+#main-container{
+    min-height: 100vh; /* will cover the 100% of viewport */
+    overflow: hidden;
+    display: block;
+    position: relative;
+    padding-bottom: 3%;;
+}
 
 footer{
-    position: static;
-    margin: auto;
-    width: 100%;
-    bottom: 0px;
-    padding-top: 50px;
+   position: absolute;
+ bottom: 0;
+ width: 100%;
 }
 
 footer > div {
-    position: unset;
+    position: absolute;
     bottom: unset;
 }
 
@@ -252,6 +257,13 @@ h4{
     text-align: center;
 }
 
+footer{
+    width: 100%;
+    background-color: aliceblue;
+    position: absolute;
+    text-align: center;
+    padding-top: unset;
+}
 .work-cell-author{
     padding: 0 15px;
     flex-basis: 102%;
@@ -332,6 +344,9 @@ h6{
         width:100%;
     }
 
+    footer > div{
+        bottom: -30px;
+    }
 
     .container {
         padding-left: unset;
@@ -374,17 +389,27 @@ h6{
     .work-panel{
         border-radius: 0px;
         width: 100%;
+        top: -20px;
+        margin-top: unset;
+
     }
     .works {
-        height: 82vh;
+        height: 700px;
+    }
+    #main-container{
+        padding-bottom: 40%;
     }
     .school-space{
         border-radius: 0px !important;
     }
-    .footer{
-        padding-top: 1px !important;
-    }
+    footer{
+        bottom: 0px;
+        position: absolute;
 
+    }
+    footer > div{
+        bottom: -50px;
+    }
     .cell-headers{
         width: 200px;
     }
