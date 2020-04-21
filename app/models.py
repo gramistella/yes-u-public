@@ -41,6 +41,7 @@ class Media(db.Model):
     upload_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     path = db.Column(db.String(64))
     type = db.Column(db.Integer)
+    duration = db.Column(db.Time)
 
     def __repr__(self):
         return "<id={}, author_id={}, upload_date={}, type={}>, path={}>".format(self.id, self.author_id, self.upload_date, self.type, self.path)

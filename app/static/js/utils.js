@@ -2,10 +2,8 @@ var generate_media_html = function(ids, urls, idx, displayControls){
     html = '';
     ext = urls[idx].split('.')[1];
     if (ext == 'mp4'){
-        if (displayControls == true){
-            html = '<img class="media-play-button" src="\\static\\resources\\play-button.png">';
-        }
-            html += '<video class="single-media" ><source src="'+urls[idx]+'#t=0.1" type="video/mp4">Your browser does not support HTML5 video.</video>';
+
+            html += '<video class="single-media" poster="\\static\\media_posters\\'+ urls[idx].slice(21,urls[idx].length-4) + '.png" ><source src="'+urls[idx]+'" type="video/mp4">Your browser does not support HTML5 video.</video>';
     }else if (ext == 'pdf'){
             pdf_name = urls[idx].substring(21);
             pdf_name = pdf_name.substring(0, pdf_name.length-4);

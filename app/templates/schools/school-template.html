@@ -160,16 +160,16 @@
                         {% if media.type == 1 %}
                         <img class="single-media" src="{{ media.path[5:] }}" >
                         {% elif media.type == 2 %}
-                        <!-- <img class="media-play-button" src="{{ url_for('static', filename='resources/play-button.png') }}" >
-                        <video class="single-media">
-                          <source src="{{ media.path[5:] }}#t=0.1" type="video/mp4">
+
+                        <video class="single-media" poster="/static/media_posters/{{ media.path[26:][:-4] }}.png">
+                          <source src="{{ media.path[5:] }}" type="video/mp4">
                           Your browser does not support HTML5 video.
                         </video>
                         {% elif media.type == 3 %}
                         <div class="pdf-container">
                             <img class="single-media" src="{{ url_for('static', filename='resources/pdf-placeholder-icon.png') }}" >
                             <p>{{ (media.path[26:])[:-4] }}</p>
-                        </div> --->
+                        </div>
                         {% endif %}
                     </div>
                     {% endfor %}

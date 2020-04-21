@@ -105,19 +105,22 @@ var editDescription = function()
     }
 }
 $(document).ready(function() {
+
     $('#upload-media-button').on('click touchstart', function(){
         dropperForm = document.getElementById("upload-form");
-        if (isUploadFormVisible){
-            dropperForm.className = 'hidden';
-            isUploadFormVisible = 0;
-            $("body").removeClass("modal-open");
-            refreshMedia(true);
-        } else {
-            dropperForm.className = '';
-            isUploadFormVisible = 1;
-            $("body").addClass("modal-open");
-        }
-        console.log('ass');
+        dropperForm.className = '';
+        isUploadFormVisible = 1;
+        $("body").addClass("modal-open");
+
+    });
+    $('#upload-form-close').on('click touchstart', function(){
+        dropperForm = document.getElementById("upload-form");
+        dropperForm.className = 'hidden';
+        isUploadFormVisible = 0;
+        $("body").removeClass("modal-open");
+        refreshMedia(true);
+
+
     });
 });
 

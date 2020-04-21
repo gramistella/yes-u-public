@@ -19,7 +19,10 @@ class Config(object):
     SQLALCHEMY_POOL_RECYCLE = 120
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    RESOURCES = '.\\app\\static\\resources'
+
     MEDIA_UPLOADS = '.\\app\\static\\user_uploads'
+    MEDIA_POSTERS = '.\\app\\static\\media_posters'
     ALLOWED_IMAGE_EXTENSIONS = ['JPEG', 'JPG', 'PNG']
     ALLOWED_VIDEO_EXTENSIONS = ['MP4']
     ALLOWED_PDF_EXTENSIONS = ['PDF']

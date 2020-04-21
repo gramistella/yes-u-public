@@ -8,6 +8,9 @@ from flask_login import current_user, login_user, logout_user, login_required
 from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
 from sqlalchemy.orm import exc as sqlalchemy_exc
+from moviepy.editor import VideoFileClip
+from PIL import Image, ImageDraw, ImageFont
+from datetime import timedelta
 
 CORS(app)
 
@@ -281,6 +284,30 @@ def handle_request():
     return '', 204
 
 
+def poster_processing(poster_path, duration):
+
+    poster = Image.open(poster_path)
+    poster.thumbnail((230, 230), Image.ANTIALIAS)
+
+    # dimensions
+    poster_width, poster_height = poster.size
+    font = ImageFont.truetype("arial.ttf", 17)
+    duration_string = str(timedelta(seconds=round(duration)))
+    text_size = font.getsize(duration_string)
+    button_size = (text_size[0] + 20, text_size[1] + 20)
+    button_img = Image.new('RGBA', button_size, "black")
+
+    # put text on button with 10px margins
+    button_draw = ImageDraw.Draw(button_img)
+    button_draw.text((5, 0), duration_string, font=font)
+
+    poster.paste(button_img, (poster_width-65, poster_height-20))
+
+    poster.save(poster_path)
+    button_img.close()
+    poster.close()
+
+
 @app.route('/upload', methods=['POST'])
 @login_required
 @cross_origin()
@@ -303,9 +330,11 @@ def upload_handler():
     ret = allowed_media(filename)
     upload_flag = ret[0]
     media_type = ret[1]
-
+    save_path = os.path.join(app.config["MEDIA_UPLOADS"], secure_filename(filename)).replace('\\', '/')
+    poster_filename = filename.split('.')[0] + '.png'
+    poster_save_path = os.path.join(app.config["MEDIA_POSTERS"], secure_filename(poster_filename)).replace('\\', '/')
     if upload_flag:
-        save_path = os.path.join(app.config["MEDIA_UPLOADS"], secure_filename(filename)).replace('\\', '/')
+
         current_chunk = int(request.form['dzchunkindex'])
         total_chunks = int(request.form['dztotalchunkcount'])
         upload_size = int(request.form['dztotalfilesize'])
@@ -335,11 +364,25 @@ def upload_handler():
                 return make_response(('Size mismatch. Please try again.', 500))
             else:
                 # Success
-                new_media = Media(
-                    author_id=current_user.id,
-                    path=save_path,
-                    type=media_type
-                )
+                if media_type == 2:
+                    clip = VideoFileClip(save_path)
+                    clip.save_frame(poster_save_path, 0)
+                    duration = clip.duration
+                    clip.__del__()
+                    del clip
+                    poster_processing(poster_save_path, duration)
+                    new_media = Media(
+                        author_id=current_user.id,
+                        path=save_path,
+                        type=media_type,
+                        duration=duration
+                    )
+                else:
+                    new_media = Media(
+                        author_id=current_user.id,
+                        path=save_path,
+                        type=media_type
+                    )
                 db.session.add(new_media)
                 db.session.commit()
     else:
@@ -469,10 +512,14 @@ def delete_media():
     except Exception:
         raise
     if media is not None and true_if_owner(media, current_user):
+        poster_path = './app/static/media_posters/' + media.path[26:].split('.')[0] + '.png'
         db.session.delete(media)
         db.session.commit()
+        print(poster_path, file=sys.stdout)
+        print(media.path)
         try:
             os.remove(media.path)
+            os.remove(poster_path)
         except FileNotFoundError:
             pass
         except Exception:

@@ -395,10 +395,16 @@ h4{
 .hidden{ display: none; }
 
 
+.work-cell-description{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 42px;
+}
+
 @media(max-width:1000px) {
 
     .panel{
-        width:90%;
+        width:95%;
     }
 
 
@@ -410,9 +416,30 @@ h4{
         padding: unset;
     }
     .panel{
-        width: 107%;
+        width: 100%;
         bottom: -9%;
         border-radius: 0px;
+    }
+    .work-panel{
+        width: 100%;
+    }
+    .work-table{
+        border-spacing: 0px 8px;
+    }
+    .work-cell-description{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        height: 60px;
+    }
+    .work-cell-date{
+        font-size: 3vw;
+    }
+    .media-panel{
+        width: 100%;
+        border-radius: 0px;
+    }
+    .work-cell-author{
+        font-size: 3vw;
     }
     .media-play-button{
         display: none;
@@ -420,11 +447,26 @@ h4{
     .school-space{
         border-radius: 0px !important;
     }
+    .school > h2{
+        font-size: 5vw;
+    }
+    .school > h3{
+        font-size: 4.5vw;
+    }
     .footer{
         padding-top: 1px !important;
     }
     .work-cell{
-        height: 150px;
+        height: 160px;
+        width: 95%;
+        margin: 0 auto;
+        margin-top: 10px;
+    }
+
+    .create-work-cell{
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 10px;
     }
 
     #zoom-pdf{
