@@ -126,7 +126,8 @@ footer{
     -ms-user-select: none;
     justify-content: safe center;
     height: 160px;
-    touch-action: pan-y;
+    touch-action: pan-x;
+    overflow-y: hidden;
 }
 .media-play-button{
     position: absolute;

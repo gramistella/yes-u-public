@@ -43,9 +43,14 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', fun
 })
 
 function hasTouch() {
-    return 'ontouchstart' in document.documentElement
-           || navigator.maxTouchPoints > 0
-           || navigator.msMaxTouchPoints > 0;
+    try{
+        document.createEvent("TouchEvent");
+        return true;
+    }
+    catch(e){
+        return false;
+    }
+}
 }
 
 if (hasTouch()) { // remove all the :hover stylesheets
