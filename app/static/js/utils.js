@@ -5,7 +5,7 @@ var generate_media_html = function(ids, urls, idx, displayControls){
         if (displayControls == true){
             html = '<img class="media-play-button" src="\\static\\resources\\play-button.png">';
         }
-            html += '<video class="single-media"><source src="'+urls[idx]+'" type="video/mp4">Your browser does not support HTML5 video.</video>';
+            html += '<video class="single-media" ><source src="'+urls[idx]+'#t=0.1" type="video/mp4">Your browser does not support HTML5 video.</video>';
     }else if (ext == 'pdf'){
             pdf_name = urls[idx].substring(21);
             pdf_name = pdf_name.substring(0, pdf_name.length-4);
