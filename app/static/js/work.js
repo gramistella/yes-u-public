@@ -161,7 +161,7 @@ var editWork = function()
 display = 0;
 playing_media = null;
 
-$(document).on("click","#media-slider > div.selectable", function (event) {
+$(document).on("click tap","#media-slider > div.selectable", function (event) {
 
     if (isWorkEditable){
 
@@ -219,7 +219,7 @@ $(document).on("click","#media-slider > div.selectable", function (event) {
     }
 });
 
-$(document).on("click","#media-slider-public > div", function (event) {
+$(document).on("click tap","#media-slider-public > div", function (event) {
 
     if (display == 0){
         src_img = $(this).find('img').attr('src');
@@ -255,7 +255,7 @@ $(document).on("click","#media-slider-public > div", function (event) {
 });
 
 
-$(document).on("click","#zoom-close",function() {
+$(document).on("click tap","#zoom-close",function() {
       if (display == 1){
             document.getElementById("zoom-media").className = 'hidden';
             $("body").removeClass("modal-open");

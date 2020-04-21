@@ -34,7 +34,7 @@
             <img class="logo-img" src="{{ url_for('static', filename='resources/logo.png') }}">
         </h1>
 
-        <div class="circle icon" onclick="toggleNav()">
+        <div class="circle icon" onmousedown="toggleNav()">
             <span class="line top"></span>
             <span class="line middle"></span>
             <span class="line bottom"></span>
@@ -106,7 +106,7 @@
                     Description
                 </h4>
                 {% if is_school_owner %}
-                <a id="edit-button" class="button" style="position: absolute;top: 0%;height: 30px;line-height: 15px;right: 0;color:white;" onclick="editDescription();">Edit description</a>
+                <a id="edit-button" class="button" style="position: absolute;top: 0%;height: 30px;line-height: 15px;right: 0;color:white;" onmousedown="editDescription();">Edit description</a>
                 {% endif %}
                 <div id="description-area">
 
@@ -124,11 +124,11 @@
                     </video>
                 <a id="zoom-pdf" href=""></a>
                 {% if is_school_owner %}
-                <a class="button delete" style="display:flex; width:133px;position:absolute;color:white;bottom:45px;left:0;right:0" onclick="">Delete Media</a>
+                <a class="button delete" style="display:flex; width:133px;position:absolute;color:white;bottom:45px;left:0;right:0" onmousedown="">Delete Media</a>
                 {% endif %}
             </div>
             <div class="hidden" id="upload-form">
-                <a id="upload-form-close" onclick="uploadMedia();"></a>
+                <a id="upload-form-close" onmousedown="uploadMedia();"></a>
                 <button type="button" class="collapsible">What are the supported filetypes?</button>
                 <div class="collapsible-content">
                   <p>Currently, the supported filetypes are: JPEG (JPG), PNG, MP4 (H.264) and PDF</p>
@@ -150,7 +150,7 @@
                     {% endif %}
                 </p>
                     {% if is_school_owner %}
-                    <a class="button" style="display:flex; width:90px; float:right;top:-100%;position:relative;color:white;" onclick="uploadMedia();">Upload</a>
+                    <a class="button" style="display:flex; width:90px; float:right;top:-100%;position:relative;color:white;" onmousedown="uploadMedia();">Upload</a>
 
                     {% endif %}
                     </div>
