@@ -5,7 +5,7 @@ $(document).ready(function () {
         var display=0;
         playing_media = null;
 
-        $(document).on("click tap", "#zoom-close", function() {
+        $(document).on("click touchstart", "#zoom-close", function() {
           if (display == 1){
 
                 if (isShowingPdf){
@@ -19,7 +19,7 @@ $(document).ready(function () {
                 display = 0;
            }
         });
-        $(document).on("click tap","#media-slider > div", function(event) {
+        $(document).on("click touchstart","#media-slider > div", function(event) {
             if ($(event.target).prop('tagName') != 'A'){
                 if (display == 0){
                     media_id = $(this).attr('id').substring(13);

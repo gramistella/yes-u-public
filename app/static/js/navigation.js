@@ -51,7 +51,6 @@ function hasTouch() {
         return false;
     }
 }
-}
 
 if (hasTouch()) { // remove all the :hover stylesheets
     try { // prevent exception on browsers not supporting DOM styleSheets properly
