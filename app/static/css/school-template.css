@@ -113,7 +113,7 @@ footer{
     grid-gap: 30px;
     grid-auto-flow: column;
     grid-auto-columns: max-content;
-    overflow-x: auto;
+
     scrollbar-color: lightgray white;
     padding-bottom: calc(.75 * var(--gutter));
     margin-bottom: calc(-.25 * var(--gutter));
@@ -127,7 +127,7 @@ footer{
     justify-content: safe center;
     height: 160px;
     touch-action: pan-x;
-    overflow-y: hidden;
+
 }
 .media-play-button{
     position: absolute;
