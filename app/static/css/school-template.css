@@ -127,6 +127,7 @@ footer{
     justify-content: safe center;
     height: 160px;
     touch-action: pan-x;
+    overflow: hidden;
 
 }
 .media-play-button{
