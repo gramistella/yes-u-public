@@ -68,13 +68,14 @@ $(function() {
 
 var editDescription = function()
 {
+    event.preventDefault();
     descriptionInput = document.getElementById("description-input");
     description = $("#description-text").text();
     if (isDescriptionEditable){
 
         description = descriptionInput.value;
         $('#description-text').text(description);
-        $('#edit-button').text('Edit description');
+        $('#edit-desc-button').text('Edit description');
         $.ajax({
             url: '/backend',
             type: 'POST',
@@ -97,57 +98,58 @@ var editDescription = function()
             }
         });
     } else {
-        $('#edit-button').text('Save edits');
+        $('#edit-desc-button').text('Save edits');
         $('#description-text').hide();
         $('#description-input').val(description);
         $('#description-input').show();
         isDescriptionEditable = 1;
     }
-}
-$(document).ready(function() {
-
-    $('#upload-media-button').on('click touchstart', function(){
+};
+function uploadMedia() {
+    event.preventDefault();
+    if(!isUploadFormVisible){
         dropperForm = document.getElementById("upload-form");
         dropperForm.className = '';
         isUploadFormVisible = 1;
         $("body").addClass("modal-open");
 
-    });
-    $('#upload-form-close').on('click touchstart', function(){
+    } else {
         dropperForm = document.getElementById("upload-form");
         dropperForm.className = 'hidden';
         isUploadFormVisible = 0;
         $("body").removeClass("modal-open");
         refreshMedia(true);
+    }
 
-
-    });
-});
+};
 
 var deleteMedia = function(id){
+    event.preventDefault();
     if (confirmation_display_media == 0){
             document.getElementById("zoom-media").className = 'hidden';
             $("#confirmation-dialog-container").css("display", "unset");
-            $("#confirmation-dialog-container").find('div').find('p').text(' Are you sure you want to delete this media?')
+            $("#confirmation-dialog-container").find('div').find('p').text(' Are you sure you want to delete this media?');
             $("body").addClass("modal-open");
             confirmation_display_media = 1;
-            media_id = id
+            media_id = id;
      }
-}
+};
 
-$( ".work-buttons > a.delete" ).click(function( event ) {
-
+var deleteWork = function(id){
+    event.preventDefault();
     if (confirmation_display_works == 0){
             $("#confirmation-dialog-container").css("display", "unset");
-            $("#confirmation-dialog-container").find('div').find('p').text(' Are you sure you want to delete this work?')
+            $("#confirmation-dialog-container").find('div').find('p').text(' Are you sure you want to delete this work?');
             $("body").addClass("modal-open");
             confirmation_display_works = 1;
             work_id =  $(event.target).parent(".work-buttons").parent().parent().parent().parent().attr('id');
             work_id = work_id.split("_")[1];
 
      }
-});
-$( ".confirmation-dialog-buttons > a.delete" ).click(function(){
+};
+
+var confirmDialog = function(){
+    event.preventDefault();
     if (confirmation_display_media == 0){
         $.ajax({
             url: '/works/delete',
@@ -181,18 +183,20 @@ $( ".confirmation-dialog-buttons > a.delete" ).click(function(){
                 $('#confirmation-info').hide();
             },
             success: function(response){
-                location.reload()
+                location.reload();
             }
         });
     }
-});
-$( ".confirmation-dialog-buttons > a.cancel" ).click(function(){
+};
+var cancelDialog = function(){
+    event.preventDefault();
     $("#confirmation-dialog-container").css("display", "none");
     $("body").removeClass("modal-open");
-    if (confirmation_display_media == 0){
+    if (confirmation_display_works == 1){
         confirmation_display_works = 0;
     } else {
         confirmation_display_media = 0;
         document.getElementById("zoom-media").className = 'flex';
     }
-});
+
+};

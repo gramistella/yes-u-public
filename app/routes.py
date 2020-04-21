@@ -7,6 +7,7 @@ from app.models import Schools, Media, Work
 from flask_login import current_user, login_user, logout_user, login_required
 from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
+from werkzeug.urls import url_parse
 from sqlalchemy.orm import exc as sqlalchemy_exc
 from moviepy.editor import VideoFileClip
 from PIL import Image, ImageDraw, ImageFont
@@ -197,9 +198,11 @@ def login():
         user = Schools.query.filter_by(username=form.username.data).first()
         if user is None or not user.validate_password(form.password.data):
             return redirect(url_for('login'))
-
         login_user(user, remember=form.remember_me.data)
-        return redirect(url_for('index'))
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
 

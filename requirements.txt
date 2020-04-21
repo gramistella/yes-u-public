@@ -13,3 +13,4 @@ Flask-Static-Compress==1.0.2
 Flask-Compress==1.4.0
 moviepy==0.2.3.2
 Pillow==6.1.0
+Flask-Mobility==1.0.0

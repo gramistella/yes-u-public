@@ -125,7 +125,7 @@ footer{
     -webkit-user-select: none;
     -ms-user-select: none;
     justify-content: safe center;
-    height: 160px;
+    height: 179px;
     touch-action: pan-x;
     overflow: hidden;
     overflow-x: auto;
@@ -207,6 +207,7 @@ footer{
 .media-slider > div{
     object-fit:contain;
     overflow:hidden;
+    cursor: pointer;
 }
 .works {
     position: relative;
@@ -284,7 +285,7 @@ footer{
     border-collapse: separate;
     position:relative;
     width: 100%;
-    
+    touch-action: pan-y;
 }
 
 .button.delete{
@@ -305,7 +306,6 @@ footer{
     align-content:center;
     align-items:center;
     flex-direction:column;
-    overflow:hidden;
     box-shadow: 0px 1px 3px black;
 }
 
@@ -403,6 +403,23 @@ h4{
     height: 42px;
 }
 
+#edit-desc-button{
+    position: absolute;
+    top: 0%;
+    height: 30px;
+    line-height: 15px;
+    right: 0;
+    color:white;
+}
+
+#upload-media-button{
+    display:flex;
+    width:90px;
+    float:right;
+    top:-100%;
+    position:relative;
+    color:white;
+}
 @media(max-width:1000px) {
 
     .panel{
@@ -422,10 +439,17 @@ h4{
         bottom: -9%;
         border-radius: 0px;
     }
+    .media-panel{
+        height: 310px;
+    }
+    .works{
+        width: 100%;
+    }
     .work-panel{
         width: 100%;
     }
     .work-table{
+
         border-spacing: 0px 8px;
     }
     .work-cell-description{
@@ -475,11 +499,35 @@ h4{
         width: 100% !important;
         transform: none;
     }
-}
 
-@media(max-width:450px) {
-    .panel{
-        width: 107%;
+    .collapsible{
+        width: 92%;
+    }
+    .collapsible-content{
+        padding: 8px 12px;
+        width: 92%;
+    }
 
+    #upload-form > form {
+        margin-top: 23vh;
+        height: 70vh;
+        width: 92vw;
+    }
+
+    #upload-media-button{
+
+        padding: 4px 4px;
+        width:62px;
+        top:-100%;
+        position:relative;
+        color:white;
+    }
+
+    #edit-desc-button{
+        height: 27px;
+        line-height: 13px;
+        width: 140px;
+        padding: 6px 10px;
     }
 }
+

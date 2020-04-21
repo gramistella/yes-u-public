@@ -1,15 +1,15 @@
-isToggled = 0
+isToggled = 0;
 function toggleNav() {
         if (isToggled == 0){
             $(".icon").addClass("close");
             $(".nav-window").show();
-			isToggled = 1
+			isToggled = 1;
             $(".container").addClass("open");
 
         } else {
              $(".icon").removeClass("close");
             $(".nav-window").hide();
-			isToggled = 0
+			isToggled = 0;
             $(".container").removeClass("open");
         }
 }
@@ -17,11 +17,11 @@ function toggleNav() {
 window.onresize = function() {
     if (window.innerWidth >= 768) {
         if (isToggled == 1){
-            toggleNav()
+            toggleNav();
         }
     }
-}
-window.ondragstart = function() {return false}
+};
+window.ondragstart = function() {return false;};
 
 var coll = document.getElementsByClassName("collapsible");
 var i;
@@ -39,32 +39,5 @@ for (i = 0; i < coll.length; i++) {
 }
 
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-    console.log('changed!!');
-})
-
-function hasTouch() {
-    try{
-        document.createEvent("TouchEvent");
-        return true;
-    }
-    catch(e){
-        return false;
-    }
-}
-
-if (hasTouch()) { // remove all the :hover stylesheets
-    try { // prevent exception on browsers not supporting DOM styleSheets properly
-        for (var si in document.styleSheets) {
-            var styleSheet = document.styleSheets[si];
-            if (!styleSheet.rules) continue;
-
-            for (var ri = styleSheet.rules.length - 1; ri >= 0; ri--) {
-                if (!styleSheet.rules[ri].selectorText) continue;
-
-                if (styleSheet.rules[ri].selectorText.match(':hover')) {
-                    styleSheet.deleteRule(ri);
-                }
-            }
-        }
-    } catch (ex) {}
-}
+    console.log('different color scheme detected');
+});

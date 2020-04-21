@@ -7,17 +7,14 @@ var generate_media_html = function(ids, urls, idx, displayControls){
     }else if (ext == 'pdf'){
             pdf_name = urls[idx].substring(21);
             pdf_name = pdf_name.substring(0, pdf_name.length-4);
-            html = '<div class="pdf-container"><img class="single-media" src="\\static\\resources\\pdf-placeholder-icon.png" ><p>'+ pdf_name +'</p></div>'
+            html = '<div class="pdf-container"><img class="single-media" src="\\static\\resources\\pdf-placeholder-icon.png" ><p>'+ pdf_name +'</p></div>';
     }else{
             html = '<img class="single-media" src="'+urls[idx]+'" >';
         }
-    if (ids.length != 0 ){
-        html = '<div class="selectable" id="single-media-'+ids[idx]+'">'+ html +'</div>';
-    } else {
-        html = '<div id="single-media-'+idx+'">'+ html +'</div>';
-    }
+
+    html = '<div id="single-media-'+idx+'" href="#" onclick="openMedia(event);">'+ html +'</div>';
     return html;
-}
+};
 
 var applySelectionCallback = function(attached_media){
     media_slider = document.getElementById('media-slider');
@@ -34,19 +31,22 @@ var applySelectionCallback = function(attached_media){
             }
         }
     }
-}
+};
 
-var refreshMedia = async function(displayControls = false, _callback = null, attached_media = null){
+var refreshMedia = function(displayControls = false, _callback = null, attached_media = null){
     media_slider = document.getElementById('media-slider');
     while (media_slider.firstChild) {
         media_slider.firstChild.remove();
     }
-
+    console.log(refreshMedia.caller.toString());
     fetch(`/backend?t=1`).then((response) => {
         // Convert the response data to JSON
+        console.log('fetched data');
         response.json().then((data) => {
                 ids = data['ids'];
                 urls = data['urls'];
+                console.log(urls);
+
                 for (var i=0; i < urls.length ;i++){
                     html = generate_media_html(ids, urls, i, displayControls);
                     media_slider.insertAdjacentHTML("beforeend", html);
@@ -61,7 +61,7 @@ var refreshMedia = async function(displayControls = false, _callback = null, att
                 }
             });
     });
-}
+};
 
 function bytesToSize(bytes) {
    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];

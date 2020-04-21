@@ -1,5 +1,5 @@
-isWorkEditable = 0;
-attached_media = [];
+var isWorkEditable = 0;
+var attached_media = [];
 
 (function () {
     var a = document.getElementById("body"),
@@ -161,7 +161,7 @@ var editWork = function()
 display = 0;
 playing_media = null;
 
-$(document).on("click tap","#media-slider > div.selectable", function (event) {
+$(document).on("click tap","#media-slider > div", function (event) {
 
     if (isWorkEditable){
 

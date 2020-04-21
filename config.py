@@ -3,8 +3,8 @@ import os,sys
 
 class Config(object):
 
-    if os.path.exists('debug'):
-        print('DEBUG MODE ENABLED', file=sys.stdout)
+    if not os.path.exists('debug'):
+        print(' * DISABLED COMPRESSION', file=sys.stdout)
         COMPRESSOR_ENABLED = False
 
     SECRET_KEY = os.environ.get('SECRET_KEY') or '***REMOVED***'

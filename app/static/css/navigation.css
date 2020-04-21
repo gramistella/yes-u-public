@@ -164,8 +164,12 @@ h1.mobile {
     display: block;
     box-shadow: 3px 3px black;
     border-radius: 2px;
+    touch-action: none;
 }
 
+.ui-loader {
+    display: none !important;
+}
 .container {
     width: 100%;
     max-width: unset
@@ -173,12 +177,6 @@ h1.mobile {
 .button:hover, .button:visited, .button:link, .button:active
 {
     text-decoration: none;
-}
-
-.button:hover {
-    box-shadow: 3px 3px 3px gray;
-    transform: scale(1.006, 1.006);
-    color: white;
 }
 
 .icon {
@@ -295,6 +293,7 @@ h1.mobile {
     display:flex;
     flex-direction:column;
     border-radius: 5px;
+    text-align:center;
 }
 
 .confirmation-dialog > h5{
@@ -393,8 +392,21 @@ h1.mobile {
     .nav-window{
        display:none!important;
     }
+    .button:hover {
+        box-shadow: 3px 3px 3px gray;
+        transform: scale(1.006, 1.006);
+        color: white;
+    }
+}
+@media (max-width: 1000px)
+{
+    .confirmation-dialog{
+        width: 60vw;
+    }
+
 }
 @media (max-width:768px) {
+
     .navigation {
         width: 100%;
         height: 60px;
@@ -460,7 +472,7 @@ h1.mobile {
         width: 97%;
         background: #404040;
         border-radius: 8px;
-        transition: all ease-out 0.1s;
+
     }
 
     .top {
@@ -533,30 +545,6 @@ h1.mobile {
 @media (max-width:375px) {
 
 }
-    @media (max-width:330px) {
-        .nav-window {
-            width: 120vw;
-        }
 
-        .icon {
-            width: 25px;
-            height: 25px;
-            left: 7px;
-            top: 5px;
-        }
-
-        .line {
-            position: absolute;
-            height: 5px;
-            width: 97%;
-            background: #404040;
-            border-radius: 8px;
-            transition: all cubic-bezier(0.26, 0.1, 0.27, 1.55) 0.15s;
-        }
-
-        .nav-list {
-            right: 90vw;
-        }
-    }
 
 

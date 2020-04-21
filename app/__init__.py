@@ -12,6 +12,7 @@ if __name__ == '__main__':
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 login = LoginManager(app)
+login.login_view = 'login'
 markdown = Misaka().init_app(app)
 flask_static_compress = FlaskStaticCompress(app)
 Compress().init_app(app)

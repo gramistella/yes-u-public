@@ -81,8 +81,8 @@
                     <h5>Confirmation required</h5>
                     <p> Are you sure you want to delete this [obj]?</p>
                     <div class="confirmation-dialog-buttons">
-                        <a class="button delete">Confirm</a>
-                        <a class="button cancel">Cancel</a>
+                        <a class="button delete" href="#" onclick="confirmDialog();">Confirm</a>
+                        <a class="button cancel" href="#" onclick="cancelDialog();">Cancel</a>
                     </div>
                 </div>
                 <div id="loading-spinner" class="lds-ring"><div></div><div></div><div></div><div></div></div>
@@ -106,7 +106,7 @@
                     Description
                 </h4>
                 {% if is_school_owner %}
-                <a id="edit-button" class="button" style="position: absolute;top: 0%;height: 30px;line-height: 15px;right: 0;color:white;" onmousedown="editDescription();">Edit description</a>
+                <button id="edit-desc-button" class="button" onclick="editDescription();">Edit description</button>
                 {% endif %}
                 <div id="description-area">
 
@@ -116,19 +116,19 @@
                 </div>
             </div>
             <div class="hidden" id="zoom-media">
-                <a id="zoom-close"></a>
-                <img id="zoom-img" src="">
+                <a id="zoom-close" onclick="openMedia();" href="#"></a>
+                <img id="zoom-img" src="#">
                 <video width="310" id="zoom-video" controls>
                       <source src="" type="video/mp4">
                       Your browser does not support HTML5 video.
                     </video>
-                <a id="zoom-pdf" href=""></a>
+                <a id="zoom-pdf" href="#"></a>
                 {% if is_school_owner %}
-                <a class="button delete" style="display:flex; width:133px;position:absolute;color:white;bottom:45px;left:0;right:0" onmousedown="">Delete Media</a>
+                <a class="button delete" style="display:flex; width:133px;position:absolute;color:white;bottom:45px;left:0;right:0" href="#" onclick="deleteMedia(self)">Delete Media</a>
                 {% endif %}
             </div>
             <div class="hidden" id="upload-form">
-                <a id="upload-form-close" onmousedown="uploadMedia();"></a>
+                <a id="upload-form-close" onclick="uploadMedia();" href="#"></a>
                 <button type="button" class="collapsible">What are the supported filetypes?</button>
                 <div class="collapsible-content">
                   <p>Currently, the supported filetypes are: JPEG (JPG), PNG, MP4 (H.264) and PDF</p>
@@ -150,12 +150,12 @@
                     {% endif %}
                 </p>
                     {% if is_school_owner %}
-                    <a class="button" id="upload-media-button" style="display:flex; width:90px; float:right;top:-100%;position:relative;color:white;">Upload</a>
+                    <a class="button" id="upload-media-button" onclick="uploadMedia();">Upload</a>
                     {% endif %}
                     </div>
                 <div class="media-slider" id="media-slider">
                     {% for media in media_list %}
-                    <div id="single-media-{{ media.id }}">
+                    <div id="single-media-{{ media.id }}" onclick="openMedia();">
 
                         {% if media.type == 1 %}
                         <img class="single-media" src="{{ media.path[5:] }}" >
@@ -207,7 +207,7 @@
                                     <div class="work-buttons">
                                          <a class="button" style="position:relative;top:0%;height:30px;line-height:15px;margin: 10px 10px;" href="{{ url_for('user_work', work_id=work.id) }}">View</a>
                                         {% if is_school_owner %}
-                                        <a class="button delete" style="position:relative;top:0%;height:30px;line-height:15px;margin: 10px 10px;">Delete</a>
+                                        <a class="button delete" style="position:relative;top:0%;height:30px;line-height:15px;margin: 10px 10px;" href="#" onclick="deleteWork( {{ work.id }})">Delete</a>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -250,10 +250,11 @@
     </footer>
 
     {% if is_school_owner %}
-    {% compress 'js' %}
     <script type="text/javascript" src="{{ url_for('static', filename='libs/jquery3.4.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='libs/dropzone5.4.0.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='libs/media.js') }}"></script>
+    {% compress 'js' %}
+
     <script type="text/javascript" src="{{ url_for('static', filename='js/navigation.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/utils.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/your-page.js') }}"></script>
