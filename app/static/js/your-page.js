@@ -123,7 +123,7 @@ function uploadMedia() {
 
 };
 
-var deleteMedia = function(id){
+var deleteMedia = function(event, id){
     event.preventDefault();
     if (confirmation_display_media == 0){
             document.getElementById("zoom-media").className = 'hidden';
@@ -132,6 +132,7 @@ var deleteMedia = function(id){
             $("body").addClass("modal-open");
             confirmation_display_media = 1;
             media_id = id;
+
      }
 };
 

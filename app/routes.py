@@ -521,7 +521,8 @@ def delete_media():
     except sqlalchemy_exc.NoResultFound:
         pass
     except Exception:
-        raise
+        print(request.get_json())
+
     if media is not None and true_if_owner(media, current_user):
         poster_path = './app/static/media_posters/' + media.path[26:].split('.')[0] + '.png'
         db.session.delete(media)
