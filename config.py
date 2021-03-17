@@ -3,15 +3,15 @@ import os,sys
 
 class Config(object):
 
-    if not os.path.exists('debug'):
+    if os.path.exists('debug'):
         print(' * DISABLED COMPRESSION', file=sys.stdout)
         COMPRESSOR_ENABLED = False
 
     SECRET_KEY = os.environ.get('SECRET_KEY') or '***REMOVED***'
 
-    MYSQL_HOST = 'ls-f809ec4120ad2052b087d2bc11aac70f15665ef4.c8vqvp1pkij4.eu-central-1.rds.amazonaws.com'
+    MYSQL_HOST = '***REMOVED***'
     MYSQL_USER = '***REMOVED***'
-    MYSQL_PASSWORD = 'zO4NU1A83g6c(7iD#H0u+B:4lyIol&Aq'
+    MYSQL_PASSWORD = '***REMOVED***'
     MYSQL_DB = '***REMOVED***'
 
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://' + MYSQL_USER + ':' + MYSQL_PASSWORD + '@' + MYSQL_HOST \

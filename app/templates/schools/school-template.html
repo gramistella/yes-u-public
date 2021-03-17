@@ -111,7 +111,7 @@
                 <div id="description-area">
 
                     <p id="description-text">{{ description }}</p>
-                    <textarea id="description-input" maxlength="406" wrap="hard">
+                    <textarea id="description-input" maxlength="512" wrap="hard">
                     </textarea>
                 </div>
             </div>
@@ -244,7 +244,7 @@
     </div>
     <footer>
         <div>
-            Made with ♥ by Giovanni Ramistella | Liceo Galileo Galilei, CT
+            {{ get_footer()|safe }}
         </div>
 
     </footer>

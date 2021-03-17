@@ -15,9 +15,9 @@ from datetime import timedelta
 
 CORS(app)
 
-max_characters_allowed_bio = 190
+max_characters_allowed_bio = 512
 max_characters_allowed_work_title = 50
-max_characters_allowed_work_desc = 360
+max_characters_allowed_work_desc = 512
 
 
 @app.route('/')
@@ -45,6 +45,17 @@ def get_author_from_id(author_id):
     return Schools.query.filter_by(id=author_id).all()[0].name
 
 
+def get_footer():
+    desc = "Made with ♥ by <a href=\"https://github.com/gramistella\">Giovanni Ramistella</a>  | Liceo Galileo Galilei, CT"
+    return desc
+
+
+app.jinja_env.globals.update(
+    get_author_from_id=get_author_from_id,
+    get_footer=get_footer
+)
+
+
 def true_if_owner(obj, author):
     ownership = False
     try:
@@ -53,9 +64,6 @@ def true_if_owner(obj, author):
     except AttributeError:
         print('Attribute error in is_owner()', file=sys.stdout)
     return ownership
-
-
-app.jinja_env.globals.update(get_author_from_id=get_author_from_id)
 
 
 def safe_cast(val, to_type, default=None):

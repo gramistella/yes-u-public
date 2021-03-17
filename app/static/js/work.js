@@ -136,7 +136,7 @@ var editWork = function()
                         replaced_string = urls[i].replace(/\/\//g, "/");
 
                         if (attached_media.includes(replaced_string)){
-                            html = html.slice(0, 22) + ' selected-media' + html.slice(22);
+                            html = html.slice(0, 24) + 'class="selected-media"' + html.slice(24);
                         }
 
                         media_slider_private.insertAdjacentHTML("beforeend", html);

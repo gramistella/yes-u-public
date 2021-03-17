@@ -12,7 +12,7 @@ var generate_media_html = function(ids, urls, idx, displayControls){
             html = '<img class="single-media" src="'+urls[idx]+'" >';
         }
 
-    html = '<div id="single-media-'+idx+'" href="#" onclick="openMedia(event);">'+ html +'</div>';
+    html = '<div id="single-media-'+idx+'" onclick="openMedia(event);">'+ html +'</div>';
     return html;
 };
 
