@@ -29,7 +29,7 @@ var openMedia = function(){
                 $("#zoom-pdf").hide();
                 playing_media = $(this);
             } else if (src_img_pdf != null){
-                pdf_name = $(this).find('div').find('p').text();
+                pdf_name = $(event.currentTarget).find('div').find('p').text()
                 pdf_src = '/static/user_uploads/' + pdf_name + '.pdf';
                 $("#zoom-pdf").attr('href',pdf_src);
                 xheight = window.innerHeight/1.4;
