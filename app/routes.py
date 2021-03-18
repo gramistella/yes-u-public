@@ -253,7 +253,7 @@ def handle_request():
                 if len(description) > max_characters_allowed_bio else description
 
             if current_user.description.split() != description.split():
-                current_user.description = description
+                current_user.description = description.replace("\n", " ")
                 db.session.commit()
                 print(current_user.description + '\n + \n' + description, file=sys.stdout)
             return '', 204
@@ -521,7 +521,7 @@ def delete_media():
     except sqlalchemy_exc.NoResultFound:
         pass
     except Exception:
-        print(request.get_json())
+        raise
 
     if media is not None and true_if_owner(media, current_user):
         poster_path = './app/static/media_posters/' + media.path[26:].split('.')[0] + '.png'
