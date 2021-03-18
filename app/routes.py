@@ -265,13 +265,14 @@ def handle_request():
                 os.path.join(
                     app.config["IMAGE_UPLOADS"],
                     image.filename))
+        # Edit work
         elif request_type == 3:
             work_id = content['work_id']
             selected_work = Work.query.get_or_404(work_id)
             title = content['title'].strip()
             title = (title[:max_characters_allowed_work_title]) \
                 if len(title) > max_characters_allowed_work_title else title
-            description = content['description'].strip()
+            description = content['description'].replace("\n", " ").strip()
             description = (description[:max_characters_allowed_work_desc]) \
                 if len(description) > max_characters_allowed_work_desc else description
             attached_media = content['attached_media']
