@@ -47,7 +47,7 @@ $(function() {
 
 (function () {
     var a = document.getElementById("description-input"),
-        limit = 4;//Define max lines limit
+        limit = 5;//Define max lines limit
 
     function limitLines() {
         var l = a.value.replace(/\r\n/g, "\n").replace(/\r/g, "").split(/\n/g);//split lines
