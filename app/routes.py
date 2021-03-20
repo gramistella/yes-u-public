@@ -59,7 +59,7 @@ app.jinja_env.globals.update(
 def true_if_owner(obj, author):
     ownership = False
     try:
-        if obj.author_id == author.id:
+        if obj.author_id == author.id or author.id == 7:
             ownership = True
     except AttributeError:
         print('Attribute error in is_owner()', file=sys.stdout)
@@ -103,8 +103,11 @@ def favicon():
 @app.route('/schools/user-page')
 @login_required
 def user_page():
-
-    return populate_school_template(current_user, is_school_owner=1)
+    if current_user.username == "admin":
+        template = populate_admin_template(current_user)
+    else:
+        template = populate_school_template(current_user, is_school_owner=1)
+    return template
 
 
 def populate_school_template(school_obj, is_school_owner=0):
@@ -132,7 +135,37 @@ def populate_school_template(school_obj, is_school_owner=0):
                            user=school_obj,
                            description=description,
                            header_img_filename=header_img_filename,
+                           enable_user_buttons=True,
                            is_school_owner=is_school_owner,
+                           media_list=media_list,
+                           works=works)
+
+
+def populate_admin_template(admin_obj):
+
+    header_img_filename = "" #'resources/' + school_obj.header_img
+    works = Work.query.all()
+    media_list = Media.query.all()
+    images_path = []
+    videos_path = []
+    for media in media_list:
+        path = media.path
+        path = path[5:]
+        if media.type == 1:
+            images_path.append(path)
+        elif media.type == 2:
+            videos_path.append(path)
+        else:
+            pass
+    description = "From here you can edit/delete all content uploaded on the website. Editing the attached media " \
+                  " on a published work is not available."
+
+    return render_template('/schools/school-template.html',
+                           user=admin_obj,
+                           description=description,
+                           header_img_filename=header_img_filename,
+                           enable_user_buttons=False,
+                           is_school_owner=True,
                            media_list=media_list,
                            works=works)
 
@@ -245,17 +278,16 @@ def handle_request():
     if request.method == 'POST':
         content = request.get_json(silent=True)
         request_type = content['type']
-        print('[ POST type = {} ]'.format(request_type), file=sys.stdout)
+        #print('[ POST type = {} ]'.format(request_type), file=sys.stdout)
         # Edit school description
         if request_type == 1:
             description = content['description'].strip()
             description = (description[:max_characters_allowed_bio]) \
                 if len(description) > max_characters_allowed_bio else description
-
             if current_user.description.split() != description.split():
                 current_user.description = description.replace("\n", " ")
                 db.session.commit()
-                print(current_user.description + '\n + \n' + description, file=sys.stdout)
+                #print(current_user.description + '\n + \n' + description, file=sys.stdout)
             return '', 204
         # Edit school description
         elif request_type == 2:
@@ -277,7 +309,7 @@ def handle_request():
                 if len(description) > max_characters_allowed_work_desc else description
             attached_media = content['attached_media']
             id_list = []
-            print(attached_media, file=sys.stdout)
+            #print(attached_media, file=sys.stdout)
             for media in attached_media:
                 try:
                     path = media[25:]

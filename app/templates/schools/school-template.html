@@ -105,8 +105,10 @@
                 <h4>
                     Description
                 </h4>
-                {% if is_school_owner %}
-                <button id="edit-desc-button" class="button" onclick="editDescription();">Edit description</button>
+                {% if enable_user_buttons %}
+                    {% if is_school_owner %}
+                    <button id="edit-desc-button" class="button" onclick="editDescription();">Edit description</button>
+                    {% endif %}
                 {% endif %}
                 <div id="description-area">
 
@@ -149,8 +151,10 @@
                     No media to show
                     {% endif %}
                 </p>
-                    {% if is_school_owner %}
-                    <a class="button" id="upload-media-button" onclick="uploadMedia();">Upload</a>
+                    {% if enable_user_buttons %}
+                        {% if is_school_owner %}
+                        <a class="button" id="upload-media-button" onclick="uploadMedia();">Upload</a>
+                        {% endif %}
                     {% endif %}
                     </div>
                 <div class="media-slider" id="media-slider">
@@ -186,11 +190,12 @@
                 <div class="works">
 
                     <div class="work-table">
-                        {% if is_school_owner %}
-                        <div class="create-work-cell">
-
-                            <a class="new-work button" href="{{ url_for('new_work') }}">Add work</a>
-                        </div>
+                        {% if enable_user_buttons %}
+                            {% if is_school_owner %}
+                            <div class="create-work-cell">
+                                <a class="new-work button" href="{{ url_for('new_work') }}">Add work</a>
+                            </div>
+                            {% endif %}
                         {% endif %}
                         {% if (works|length > 0)%}
                         {% for work in works %}
