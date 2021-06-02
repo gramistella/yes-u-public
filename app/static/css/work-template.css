@@ -4,8 +4,8 @@
 
 .panel {
 	position: absolute;
-	height: 650px;
-	bottom: unset;
+	height: 850px;
+	top: 33%;
 	left: 0;
 	right: 0;
 	margin: 0 auto;
@@ -18,9 +18,9 @@
 }
 
 footer{
-        bottom: 0px;
-        margin-top: 60px
-    }
+        bottom: -133px;
+        margin-top: 60px;
+}
 
 .container{
     height: 667px;
@@ -63,7 +63,7 @@ footer{
     width: 75%;
     background: #fcfcfc;
     position: absolute;
-    bottom: 0px;
+    bottom: -33px;
     top: unset;
     left: 0;
     right: 0;
@@ -93,7 +93,7 @@ footer{
 #description > p {
     white-space: pre-line;
     word-wrap: break-word;
-    width: 35%;
+    width: 75%;
     left: 0;
     right: 0;
     position: absolute;
@@ -108,7 +108,7 @@ textarea#body{
     text-align:center;
     width:100%;
     resize:none;
-    height:14vh;
+    height:36.2vh;
 }
 #edit-form{
     display: flex;

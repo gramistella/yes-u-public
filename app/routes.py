@@ -15,9 +15,9 @@ from datetime import timedelta
 
 CORS(app)
 
-max_characters_allowed_bio = 512
+max_characters_allowed_bio = 2013
 max_characters_allowed_work_title = 50
-max_characters_allowed_work_desc = 512
+max_characters_allowed_work_desc = 2013
 
 
 @app.route('/')
@@ -309,7 +309,7 @@ def handle_request():
                 if len(description) > max_characters_allowed_work_desc else description
             attached_media = content['attached_media']
             id_list = []
-            #print(attached_media, file=sys.stdout)
+            print(len(description), file=sys.stdout)
             for media in attached_media:
                 try:
                     path = media[25:]
