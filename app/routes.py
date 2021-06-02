@@ -309,7 +309,7 @@ def handle_request():
                 if len(description) > max_characters_allowed_work_desc else description
             attached_media = content['attached_media']
             id_list = []
-            print(len(description), file=sys.stdout)
+            #print(len(description), file=sys.stdout)
             for media in attached_media:
                 try:
                     path = media[25:]
